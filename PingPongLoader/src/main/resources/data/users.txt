@@ -1,0 +1,2 @@
+{"username" : "dvazquez", "password" : "dani", "email" : "dvazque@stratio.com", "fullname" : "Daniel Vazquez"}
+{"username" : "jcnunez", "password" : "jose", "email" : "jcnunez@stratio.com", "fullname" : "Jose Carlos Núñez"}

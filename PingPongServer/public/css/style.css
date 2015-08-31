@@ -1,0 +1,205 @@
+body {
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+div {
+    position: relative;
+}
+
+a {
+  color: #00B7FF;
+  text-decoration: none;
+}
+
+ul, ol {
+    list-style:none;
+}
+
+.login {
+    width:auto;
+    margin:20px auto; /*Centramos automaticamente*/
+    display:table;
+    text-align: center;
+    border-style: groove;
+    padding: 50px;
+}
+
+.form-signin div{
+    padding: 10px;
+}
+
+.form-signin div input{
+    height: 20px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.form-signin div a {
+    background-color: #47bae6;
+    color: #ffffff;
+    display: inline-block;
+    font-size: 14px;
+    padding: 5px 20px;
+    text-decoration: none;
+}
+
+.form-signin div a:hover {
+    background-color:#434343;
+}
+
+.page {
+    padding: 0;
+    height: 100%;
+}
+
+.content {
+    padding: 20px;
+    height: 100%;
+    display: block;
+    margin-left: 200px;
+}
+
+.logo {
+    margin: 20px;
+    position: relative;
+    text-align: center;
+}
+
+.nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 200px;
+    background-color:#000;
+}
+
+.logo p, .nav p {
+    margin: 5px;
+    color: #fff;
+    font-style: italic;
+}
+
+.nav ul{
+    width: 200px;
+    padding: 0;
+    margin: 0;
+    position: relative;
+}
+
+.nav > li {
+    display: list-item;
+}
+
+.nav li a {
+    color:#fff;
+    text-decoration:none;
+    padding:10px 12px;
+    display:block;
+    border-top: 1px #434343 solid;
+    font-size: 16px;
+    line-height: 40px;
+}
+
+.nav li a:hover {
+    background-color:#434343;
+}
+
+.nav li a img {
+    width: 35px;
+    vertical-align: sub;
+    margin: 0px 4px;
+}
+
+.nav li ul {
+    display:none;
+    position:absolute;
+    min-width:140px;
+    padding:0;
+}
+
+.nav li:hover > ul {
+    display:block;
+}
+
+.nav li ul li {
+    position:relative;
+}
+
+.nav li ul li ul {
+    right:-140px;
+    top:0px;
+}
+
+.results {
+    width:auto;
+    margin:20px auto; /*Centramos automaticamente*/
+    display:table;
+}
+
+.results tr th {
+    background-color:#434343;
+    color:#fff;
+    padding:2px 5px;
+    border-style: groove;
+}
+
+.results tr td {
+    padding: 5px;
+    text-align: center;
+}
+
+.pagination {
+    width:auto;
+    margin:0 auto; /*Centramos automaticamente*/
+    display:table;
+}
+
+.pagination > li {
+    float:left;
+}
+
+.pagination li a{
+    background-color:#47BAE6;
+    color:#fff;
+    text-decoration:none;
+    padding:2px 5px;
+    display:block;
+    border-style: groove;
+}
+
+.pagination li span {
+    background-color:#434343;
+    color:#fff;
+    text-decoration:none;
+    padding:2px 5px;
+    display:block;
+    border-style: groove;
+}
+
+.pagination li a:hover {
+    background-color:#434343;
+}
+
+.winner {
+    font-weight:bold;
+}
+
+.victory {
+    background-color:#CCFFCC;
+}
+
+.defeat {
+    background-color:#FFCCCC;
+}
+
+.stratio-color {
+    background-color:#47BAE6;
+}
+
+.error {
+    color: #F00;
+}

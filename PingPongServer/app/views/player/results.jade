@@ -1,0 +1,34 @@
+extends ../layout
+
+block content
+  h1 RESULTS
+  table(border=5).results
+    thead
+      tr
+        th(rowspan=2) Match type
+        th(rowspan=2) Game Type
+        th(colspan=3) Detail
+        th(rowspan=2) Date
+      tr
+        th Player 1
+        th Score
+        th Player 2
+    tbody
+      each result, i in results
+        tr(class=(result._source.winner === username) ? 'victory' : 'defeat')
+          td #{result._source.matchType}
+          td #{result._source.gameType}
+          td(class=(result._source.details[0].player === result._source.winner ? 'winner' : '')) #{result._source.details[0].player}
+          td #{result._source.details[0].wonSets} - #{result._source.details[1].wonSets}
+          td(class=(result._source.details[1].player === result._source.winner ? 'winner' : '')) #{result._source.details[1].player}
+          td #{result._source.date}
+
+  if totalResults > size
+    - var page = 1 + (from / size)
+    ul.pagination
+        li
+          a(href='?from=' + (from-size) + '&size=' + size) <
+        li
+          span= page
+        li
+          a(href='?from=' + (from+size) + '&size=' + size) >

@@ -1,0 +1,27 @@
+{
+  "size": 0,
+  "query": {
+    "match_all": {}
+  },
+  "aggregations": {
+    "detail": {
+      "nested": {
+        "path": "detail"
+      },
+      "aggregations": {
+        "user": {
+          "terms": {
+            "field": "detail.username"
+          },
+          "aggregations": {
+            "points": {
+              "sum": {
+                "field": "detail.totalPoints"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
