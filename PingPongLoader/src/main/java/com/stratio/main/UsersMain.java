@@ -34,8 +34,8 @@ public class UsersMain {
     public static void main(String[] args){
         System.out.println("*** PING_PONG_SERIES ***");
 
-        String filePath = args[0];
         try {
+            String filePath = args[0];
             processFile(filePath);
         } catch (IOException e) {
             e.printStackTrace();

@@ -22,7 +22,11 @@ router.get('/results', function (req, res, next) {
             from: from,
             size: size,
             totalResults: data.hits.total,
-            results: data.hits.hits
+            results: data.hits.hits,
+            victories: data.aggregations.victories.doc_count,
+            defeats: data.aggregations.defeats.doc_count,
+            matchTypeAgg: data.aggregations.matchType.buckets,
+            gameTypeAgg: data.aggregations.gameType.buckets
           });
         }
       }
