@@ -1,1 +1,1 @@
-# ping-pong-series
+# Ping-Pong Series
