@@ -1,0 +1,26 @@
+extends layout
+
+block js
+  script(type="text/javascript", src='/js/navigation.js')
+
+block body
+  div.page
+    div#nav.nav
+      include navigation.jade
+    div#main-content.content
+      block content
+        h1 HOME
+
+        div#results(style="display:none")
+          div#aggs.aggs
+          table.results
+            thead
+              tr
+                th Match type
+                th Game Type
+                th Player 1
+                th Score
+                th Player 2
+                th Date
+            tbody
+      div#error.error

@@ -7,7 +7,7 @@ module.exports = function (app) {
 
 router.get('/', function (req, res, next) {
   if(req.session.username){
-    res.render('player/home', {
+    res.render('main', {
       fullname: req.session.fullname
     });
   }else{

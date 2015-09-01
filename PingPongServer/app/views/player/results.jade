@@ -1,57 +1,49 @@
-extends ../layout
-
-block content
-  h1 RESULTS
-  table
+div.aggs
+  div.agg
+    span WINNER
+    div
+      input#victories(type='checkbox')
+      label(for='victories') Victory (#{victories})
+    div
+      input#defeats(type='checkbox')
+      label(for='defeats') Defeat (#{defeats})
+  div.agg
+    span MATCH TYPE
+    each bucket in matchTypeAgg
+      div
+        input(type='checkbox', id='#{bucket.key}')
+        label(for='#{bucket.key}') #{bucket.key} (#{bucket.doc_count})
+  div.agg
+    span GAME TYPE
+    each bucket in gameTypeAgg
+      div
+        input(type='checkbox', id='#{bucket.key}')
+        label(for='#{bucket.key}') #{bucket.key} (#{bucket.doc_count})
+table.results
+  thead
     tr
-      td
-        div.aggs
-          div.agg
-            span WINNER
-            div
-              input#victories(type='checkbox')
-              label(for='victories') Victory (#{victories})
-            div
-              input#defeats(type='checkbox')
-              label(for='defeats') Defeat (#{defeats})
-          div.agg
-            span MATCH TYPE
-            each bucket in matchTypeAgg
-              div
-                input(type='checkbox', id='#{bucket.key}')
-                label(for='#{bucket.key}') #{bucket.key} (#{bucket.doc_count})
-          div.agg
-            span GAME TYPE
-            each bucket in gameTypeAgg
-              div
-                input(type='checkbox', id='#{bucket.key}')
-                label(for='#{bucket.key}') #{bucket.key} (#{bucket.doc_count})
-      td
-        table.results
-          thead
-            tr
-              th Match type
-              th Game Type
-              th Player 1
-              th Score
-              th Player 2
-              th Date
-          tbody
-            each result in results
-              tr(class=(result._source.winner === username) ? 'victory' : 'defeat')
-                td #{result._source.matchType}
-                td #{result._source.gameType}
-                td(class=(result._source.details[0].player === result._source.winner ? 'winner' : '')) #{result._source.details[0].player}
-                td #{result._source.details[0].wonSets} - #{result._source.details[1].wonSets}
-                td(class=(result._source.details[1].player === result._source.winner ? 'winner' : '')) #{result._source.details[1].player}
-                td #{result._source.date}
+      th Match type
+      th Game Type
+      th Player 1
+      th Score
+      th Player 2
+      th Date
+  tbody
+    each result in results
+      tr(class=(result._source.winner === username) ? 'victory' : 'defeat')
+        td #{result._source.matchType}
+        td #{result._source.gameType}
+        td(class=(result._source.details[0].player === result._source.winner ? 'winner' : '')) #{result._source.details[0].player}
+        td #{result._source.details[0].wonSets} - #{result._source.details[1].wonSets}
+        td(class=(result._source.details[1].player === result._source.winner ? 'winner' : '')) #{result._source.details[1].player}
+        td #{result._source.date}
 
-        if totalResults > size
-          - var page = 1 + (from / size)
-          ul.pagination
-              li
-                a(href='?from=' + (from-size) + '&size=' + size) <
-              li
-                span= page
-              li
-                a(href='?from=' + (from+size) + '&size=' + size) >
+if totalResults > size
+  - var page = 1 + (from / size)
+  ul.pagination
+      li
+        a(href='?from=' + (from-size) + '&size=' + size) <
+      li
+        span= page
+      li
+        a(href='?from=' + (from+size) + '&size=' + size) >

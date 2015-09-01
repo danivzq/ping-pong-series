@@ -15,19 +15,9 @@ router.get('/results', function (req, res, next) {
       function (error, data) {
         if(error){
           console.log(error);
+          res.send(error);
         }else{
-          res.render('player/results', {
-            username: req.session.username,
-            fullname: req.session.fullname,
-            from: from,
-            size: size,
-            totalResults: data.hits.total,
-            results: data.hits.hits,
-            victories: data.aggregations.victories.doc_count,
-            defeats: data.aggregations.defeats.doc_count,
-            matchTypeAgg: data.aggregations.matchType.buckets,
-            gameTypeAgg: data.aggregations.gameType.buckets
-          });
+          res.send(data);
         }
       }
     );

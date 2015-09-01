@@ -38,17 +38,19 @@ ul, ol {
     padding: 5px;
 }
 
-.form-signin div a {
+#sign-in {
     background-color: #47bae6;
     color: #ffffff;
     display: inline-block;
     font-size: 14px;
     padding: 5px 20px;
     text-decoration: none;
+    height: auto;
 }
 
-.form-signin div a:hover {
+#sign-in:hover {
     background-color:#434343;
+    cursor: pointer;
 }
 
 .page {
@@ -93,9 +95,6 @@ ul, ol {
 
 .nav > li {
     display: list-item;
-}
-
-.nav li a {
     color:#fff;
     text-decoration:none;
     padding:10px 12px;
@@ -105,11 +104,12 @@ ul, ol {
     line-height: 40px;
 }
 
-.nav li a:hover {
+.nav li:hover {
     background-color:#434343;
+    cursor: pointer;
 }
 
-.nav li a img {
+.nav li img {
     width: 35px;
     vertical-align: sub;
     margin: 0px 4px;
@@ -135,11 +135,35 @@ ul, ol {
     top:0px;
 }
 
-.results {
+.aggs {
+    display:inline-block;
+    width: 30%;
+}
+
+.agg {
+    padding: 20px;
+}
+
+.agg p{
+    margin-bottom: 5px;
+    border-bottom: 1px #434343 solid;
+    font-style: italic;
+}
+
+.agg div{
+    padding-top: 5px;
+}
+
+#results {
     width:auto;
     margin:20px auto; /*Centramos automaticamente*/
-    display:table;
     border-spacing: 0px;
+}
+
+.results {
+    display:inline-block;
+    vertical-align: top;
+    width: 70%;
 }
 
 .results tr th {
