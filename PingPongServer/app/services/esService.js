@@ -24,14 +24,15 @@ function getResults(username, from, size, cb) {
       type: gameType,
       body: {
         query: {
-          nested: {
-            path: 'details',
-            query: {
-              term: {
-                'details.player': username
-              }
-            }
-          }
+//          nested: {
+//            path: 'details',
+//            query: {
+//              term: {
+//                'details.player': username
+//              }
+//            }
+//          }
+          match_all:{}
         },
         sort: {
           'date': 'desc'

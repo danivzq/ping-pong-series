@@ -17,6 +17,7 @@ router.get('/results', function (req, res, next) {
           console.log(error);
           res.send(error);
         }else{
+          res.set("username", username)
           res.send(data);
         }
       }

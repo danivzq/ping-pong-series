@@ -1,7 +1,12 @@
 extends layout
 
 block js
-  script(type="text/javascript", src='/js/navigation.js')
+  script(type="text/javascript", src='/js/events.js')
+  script(type="text/javascript", src='/js/results.js')
+  script(type="text/javascript", src='/js/smartpaginator.js')
+block css
+  link(rel='stylesheet', href='/css/smartpaginator.css')
+
 
 block body
   div.page
@@ -13,14 +18,9 @@ block body
 
         div#results(style="display:none")
           div#aggs.aggs
-          table.results
-            thead
-              tr
-                th Match type
-                th Game Type
-                th Player 1
-                th Score
-                th Player 2
-                th Date
-            tbody
-      div#error.error
+          div.results
+            p#total
+            input#totalresults(hidden)
+            table#resultstable
+            div#smart-paginator
+        div#error.error
