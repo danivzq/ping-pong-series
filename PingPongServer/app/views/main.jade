@@ -1,7 +1,8 @@
 extends layout
 
 block js
-  script(type="text/javascript", src='/js/events.js')
+  script(type="text/javascript", src='/js/navigation.js')
+  script(type="text/javascript", src='/js/home.js')
   script(type="text/javascript", src='/js/results.js')
   script(type="text/javascript", src='/js/smartpaginator.js')
 block css
@@ -13,14 +14,5 @@ block body
     div#nav.nav
       include navigation.jade
     div#main-content.content
-      block content
-        h1 HOME
-
-        div#results(style="display:none")
-          div#aggs.aggs
-          div.results
-            p#total
-            input#totalresults(hidden)
-            table#resultstable
-            div#smart-paginator
-        div#error.error
+      h1 HOME
+      div#welcome.text Welcome #{user.fullname}.

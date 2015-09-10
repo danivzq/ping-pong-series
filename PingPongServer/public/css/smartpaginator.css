@@ -101,25 +101,33 @@
 }
 /*black*/.black
 {
-    background-color: #202020;
+    background-color: #000;
 }
 .black.normal
 {
-    background-color: #1d1d1d;
-    color: #B0D551;
-    border: solid 1px #000;
+    background-color: #000;
+    color: #fff;
+    border: solid 1px #434343;
+}
+.black.normal:hover
+{
+    background-color: #434343;
 }
 .black.active
 {
-    background-color: #333333;
-    color: White;
-    border: solid 1px #000;
+    background-color: #434343;
+    color: #fff;
+    border: solid 1px #fff;
 }
 .pager.black .btn
 {
-    background-color: #1d1d1d;
-    color: White;
-    border: solid 1px #000;
+    background-color: #000;
+    color: #fff;
+    border: solid 1px #434343;
+}
+.pager.black .btn:hover
+{
+    background-color: #434343;
 }
 /*red*/.red
 {

@@ -11,10 +11,11 @@ $(document).ready(function() {
     }
   );
   $( "#nav-results" ).click(
-    loadResults(0, 20)
+    function(){
+      loadResults(0, 20)
+    }
   );
 
   /*RESULTS EVENTS*/
-
 });
 

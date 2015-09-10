@@ -29,12 +29,43 @@
 
 //RESULTS
 {
+  "from": 0,
+  "size": 20,
   "query": {
-    "nested": {
-      "path": "details",
+    "filtered": {
       "query": {
-        "term": {
-          "details.player": "dvazquez"
+        "nested": {
+          "path": "details",
+          "query": {
+            "term": {
+              "details.player": "dvazquez"
+            }
+          }
+        }
+      },
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "term": {
+                "matchType" : "SINGLES"
+              }
+            },
+            {
+              "term": {
+                "gameType" : "express-tournament"
+              }
+            },
+            {
+              "bool": {
+                "should": [
+                  {
+                    "winner" : "dvazquez"
+                  }
+                ]
+              }
+            }
+          ]
         }
       }
     }

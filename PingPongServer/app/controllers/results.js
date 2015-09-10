@@ -11,7 +11,8 @@ router.get('/results', function (req, res, next) {
   if(username){
     var from = req.query.from;
     var size = req.query.size;
-    esService.getResults(username, from, size,
+    var filters = buildFilters(req.query.filters, username);
+    esService.getResults(username, from, size, filters,
       function (error, data) {
         if(error){
           console.log(error);
@@ -28,3 +29,22 @@ router.get('/results', function (req, res, next) {
     });
   }
 });
+
+buildFilters = function(filters, username){
+  var esFilters = [];
+  for(var i in filters){
+    f = filters[i]
+    esFilters.push({bool:{should:[]}});
+    console.log(esFilters[0])
+    if(f.field === "winner" && f.value === "victories"){
+      esFilters[0].bool.should.push({term: {'winner' : username } });
+    }else if(f.field === "winner" && f.value === "defeats"){
+      esFilters[0].bool.should.push({bool: {must_not: {term: {'winner': username } } } });
+    }else{
+      var termFilter = {term:{}};
+      termFilter.term[f.field] = f.value;
+      esFilters.push(termFilter);
+    }
+  }
+  return esFilters;
+}

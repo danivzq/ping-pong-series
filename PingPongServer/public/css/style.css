@@ -135,8 +135,13 @@ ul, ol {
     top:0px;
 }
 
+#results {
+    width:auto;
+}
+
 .aggs {
     display:inline-table;
+    margin-top: 40px;
 }
 
 .agg {
@@ -173,11 +178,6 @@ ul, ol {
   font-weight: bold;
 }
 
-#results {
-    width:auto;
-    margin:20px auto; /*Centramos automaticamente*/
-}
-
 .results {
     display:inline-table;
     vertical-align: top;
@@ -191,7 +191,7 @@ ul, ol {
 }
 
 .results tr th {
-    background-color:#434343;
+    background-color:#000;
     color:#fff;
     padding: 5px;
     border-right: 1px solid #666;

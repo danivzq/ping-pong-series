@@ -1,5 +1,6 @@
 var express = require('express'),
-  router = express.Router();
+  router = express.Router()
+  esService = require('../services/esService');
 
 module.exports = function (app) {
   app.use('/', router);
@@ -7,9 +8,16 @@ module.exports = function (app) {
 
 router.get('/', function (req, res, next) {
   if(req.session.username){
-    res.render('main', {
-      fullname: req.session.fullname
-    });
+    esService.getUser(req.session.username,
+      function(error, user) {
+        if(error){
+          console.log(error);
+          res.render('main', error);
+        }else{
+          res.render('main', {user : user});
+        }
+      }
+    );
   }else{
     res.render('login');
   }
