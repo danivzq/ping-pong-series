@@ -1,4 +1,6 @@
 loadResults = function(from, size, filters) {
+  $("#nav-home")[0].className = ""
+  $("#nav-results")[0].className = "selected"
   var jqxhr = $.get( "/results",
     {
       from:from,
@@ -33,15 +35,15 @@ loadAggs = function(aggs) {
   if(aggs.victories.doc_count > 0){
     aggsHtml +=
       "<div>" +
-          "<input id='victories' type='checkbox'/>" +
-          "<label for='victories'>Victory ("+aggs.victories.doc_count+")</label>" +
+          "<input class='checkbox' id='victories' type='checkbox'/>" +
+          "<label class='checkbox' for='victories'>Victory ("+aggs.victories.doc_count+")</label>" +
       "</div>"
   }
   if(aggs.defeats.doc_count > 0){
       aggsHtml +=
       "<div>" +
-          "<input id='defeats' type='checkbox'/>" +
-          "<label for='defeats'>Defeat ("+aggs.defeats.doc_count+")</label>" +
+          "<input class='checkbox' id='defeats' type='checkbox'/>" +
+          "<label class='checkbox' for='defeats'>Defeat ("+aggs.defeats.doc_count+")</label>" +
       "</div>"
   }
   aggsHtml += "</div>"
@@ -60,8 +62,8 @@ loadDinamicAgg = function(buckets, title, name){
     for(var bucket of buckets){
       agg +=
       "<div>" +
-        "<input id='"+bucket.key+"' name='"+name+"' type='checkbox'/>" +
-        "<label for='"+bucket.key+"'>"+bucket.key+" ("+bucket.doc_count+")</label>" +
+        "<input class='checkbox' id='"+bucket.key+"' name='"+name+"' type='checkbox'/>" +
+        "<label class='checkbox' for='"+bucket.key+"'>"+bucket.key+" ("+bucket.doc_count+")</label>" +
       "</div>"
     }
     agg += "</div>"

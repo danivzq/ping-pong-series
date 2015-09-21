@@ -15,4 +15,52 @@ block body
       include navigation.jade
     div#main-content.content
       h1 HOME
-      div#welcome.text Welcome #{user.fullname}.
+      div#welcome.text Welcome #{fullname}.
+      h2 Account
+      form#home-form(action="#", method="post")
+        div
+          table#personal-data
+            tr
+              td
+                label(for="username") Username:
+              td
+                input(type="text", name="username" value="#{username}" disabled)
+            tr
+              td
+                label(for="email") Email address:
+              td
+                input#email(type="text", name="email" value="#{email}" onblur="checkEmail()")
+              td
+                p#email-error.error
+            tr
+              td
+                label(for="fullname") Full name:
+              td
+                input(type="text", name="fullname" value="#{fullname}")
+          div
+            input#pass-change.checkbox(type="checkbox")
+            label.checkbox(for="pass-change") Change password
+          table#password-change(style="display:none;")
+            tr
+              td
+                label(for="oldpassword") Old password:
+              td
+                input#password(type="hidden", name="password", value="#{password}")
+                input#oldpassword(type="password", name="oldpassword", onblur="checkOldPassword()")
+              td
+                p#oldpassword-error.error
+            tr
+              td
+                label(for="newpassword") New password:
+              td
+                input#newpassword(type="password", name="newpassword")
+            tr
+              td
+                label(for="newpassword2") Repeat new password:
+              td
+                input#newpassword2(type="password", name="newpassword2" oninput="checkNewPassword()")
+              td
+                p#newpassword2-error.error
+          div
+            input#apply(type="button", value="Apply", onclick="applyChanges()")
+            p#changeResult

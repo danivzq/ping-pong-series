@@ -1,7 +1,3 @@
-var index = "ping-pong-series";
-var gameType = "game";
-var userType = "user";
-
 var elasticsearch = require('elasticsearch');
 
 var client = new elasticsearch.Client({
@@ -9,15 +5,42 @@ var client = new elasticsearch.Client({
   log: 'trace'
 });
 
+var index = "ping-pong-series";
+
+/* USER */
+var userType = "user";
 function getUser(userId, cb) {
-    client.get({
-      index: index,
-      type: userType,
-      id: userId
-    }, cb);
+  client.get({
+    index: index,
+    type: userType,
+    id: userId
+  }, cb);
 }
 exports.getUser = getUser;
 
+function upsertUser(email, fullname, password, cb) {
+  var username = email.split("@")[0]
+
+  client.update({
+    index: index,
+    type: userType,
+    id: username,
+    body: {
+      doc: {
+        'username': username,
+        'password': password,
+        'email': email,
+        'fullname': fullname
+      },
+      doc_as_upsert : true
+    }
+  }, cb);
+}
+exports.upsertUser = upsertUser;
+
+
+/* GAME */
+var gameType = "game";
 function getResults(username, from, size, filters, cb) {
     if(filters == null){
       client.search({

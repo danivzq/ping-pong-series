@@ -13,9 +13,19 @@ $(document).ready(function() {
   $( "#nav-results" ).click(
     function(){
       loadResults(0, 20)
+      $("#nav-results")[0].className = "selected"
     }
   );
+   $( "#logout" ).click(
+      function(){
+        $(location).attr('href', '/logout')
+      }
+    );
 
-  /*RESULTS EVENTS*/
+  /*HOME EVENTS*/
+  $( "#pass-change" ).click(
+    function(){
+      showChangePasswordInputs()
+    }
+  );
 });
-

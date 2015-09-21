@@ -10,11 +10,11 @@ block body
         img(src='/img/stratio_b.png')
         p(style='color:#000') PING PONG SERIES
       img(src='/img/stratio-ball.png')
-      form#login-form.form-signin(action="#", method="post")
+      form#login-form(action="#", method="post")
         div
           input(type="text", name="username", placeholder="Username")
         div
           input(type="password", name="password", placeholder="Password")
         div
-          input#sign-in(type="button", value="Sign in")
+          input#sign-in(type="button", value="Sign in", onclick="signIn()")
       p#login-error.error

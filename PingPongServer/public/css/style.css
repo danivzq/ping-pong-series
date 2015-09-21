@@ -1,3 +1,4 @@
+/* GENERIC */
 body {
   font-size: 14px;
   font-family: sans-serif;
@@ -19,6 +20,64 @@ ul, ol {
     list-style:none;
 }
 
+form div{
+    padding: 10px;
+}
+
+form div label{
+    padding-right: 10px;
+}
+
+form div input{
+    height: 20px;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+input.checkbox {
+  height: 20px;
+  width: 20px;
+}
+
+label.checkbox {
+  vertical-align: super;
+}
+
+input.checkbox, label.checkbox:hover{
+  cursor: pointer;
+}
+
+.page {
+    padding: 0;
+    height: 100%;
+}
+
+.content {
+    padding: 20px;
+    height: 100%;
+    display: block;
+    margin-left: 200px;
+}
+
+.stratio-color {
+    background-color:#47BAE6;
+}
+
+.error {
+    color: #F00;
+    margin: 0;
+}
+
+td p.error {
+    width: 150px;
+}
+
+.success {
+    color: #0F0;
+    margin: 0;
+}
+
+/* LOGIN */
 .login {
     width:auto;
     margin:20px auto; /*Centramos automaticamente*/
@@ -26,16 +85,6 @@ ul, ol {
     text-align: center;
     border-style: groove;
     padding: 50px;
-}
-
-.form-signin div{
-    padding: 10px;
-}
-
-.form-signin div input{
-    height: 20px;
-    border-radius: 5px;
-    padding: 5px;
 }
 
 #sign-in {
@@ -53,22 +102,21 @@ ul, ol {
     cursor: pointer;
 }
 
-.page {
-    padding: 0;
-    height: 100%;
-}
-
-.content {
-    padding: 20px;
-    height: 100%;
-    display: block;
-    margin-left: 200px;
-}
+/* NAVIGATION PANEL */
 
 .logo {
     margin: 20px;
     position: relative;
     text-align: center;
+}
+
+#logout {
+    width: 200px;
+    padding: 20px 0;
+    position: absolute;
+    text-align: center;
+    bottom : 0;
+    left: 0;
 }
 
 .nav {
@@ -91,6 +139,7 @@ ul, ol {
     padding: 0;
     margin: 0;
     position: relative;
+    height: auto;
 }
 
 .nav > li {
@@ -104,12 +153,12 @@ ul, ol {
     line-height: 40px;
 }
 
-.nav li:hover {
+.nav li:hover, .nav li.selected, #logout:hover {
     background-color:#434343;
     cursor: pointer;
 }
 
-.nav li img {
+.nav li img, #logout img {
     width: 35px;
     vertical-align: sub;
     margin: 0px 4px;
@@ -135,6 +184,34 @@ ul, ol {
     top:0px;
 }
 
+/* HOME VIEW */
+
+#apply {
+    background-color: #000;
+    color: #fff;
+    display: inline-block;
+    font-size: 14px;
+    padding: 5px 20px;
+    margin: 20px;
+    text-decoration: none;
+    height: auto;
+}
+
+#apply:hover {
+    background-color:#434343;
+    cursor: pointer;
+}
+
+#home-form table {
+    width: 500px;
+}
+
+#home-form table input {
+    float: right;
+}
+
+/* RESULTS VIEW */
+
 #results {
     width:auto;
 }
@@ -157,19 +234,6 @@ ul, ol {
 
 .agg div{
     padding-top: 5px;
-}
-
-.agg input {
-  height: 20px;
-  width: 20px;
-}
-
-.agg label {
-  vertical-align: super;
-}
-
-.agg input, label:hover{
-  cursor: pointer;
 }
 
 #total {
@@ -237,12 +301,4 @@ ul, ol {
 
 .defeat {
     background-color:#FFCCCC;
-}
-
-.stratio-color {
-    background-color:#47BAE6;
-}
-
-.error {
-    color: #F00;
 }
