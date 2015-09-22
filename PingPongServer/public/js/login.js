@@ -27,6 +27,8 @@ loadUser = function() {
 }
 
 signUp = function() {
+  $("#result").html("")
+
   var email = $("#signup-form :input[name='email']").val()
   var fullname = $("#signup-form :input[name='fullname']").val()
   var password = $("#signup-form :input[name='password']").val()

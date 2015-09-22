@@ -111,7 +111,7 @@ loadResultsTable = function(hits, username) {
       "<tbody>"
   for(var hit of hits.hits){
     resultstable +=
-        "<tr class="+(hit._source.winner === username ? 'victory' : 'defeat')+">" +
+        "<tr class="+(hit._source.winner.indexOf(username) > -1 ? 'victory' : 'defeat')+">" +
           "<td>"+hit._source.matchType+"</td>" +
           "<td>"+hit._source.gameType+"</td>" +
           "<td class="+(hit._source.details[0].player === hit._source.winner ? 'winner' : '')+">"+hit._source.details[0].player+"</td>" +
