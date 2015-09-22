@@ -9,7 +9,14 @@ echo
 curl -XPOST  "http://$1/ping-pong-series" -d '{
 	"settings" : {
 		"number_of_replicas" : 1,
-		"number_of_shards" : 1
+		"number_of_shards" : 1,
+		"analysis" : {
+			"analyzer" : {
+				"standard" : {
+					"type": "standard"
+				}
+			}
+		}
 	},
 	"mappings" : {
 		"game" : {
@@ -32,14 +39,14 @@ curl -XPOST  "http://$1/ping-pong-series" -d '{
 				},
 				"winner" : {
 					"type" : "string",
-					"index" : "not_analyzed"
+					"analyzer" : "standard"
 				},
 				"details" : {
 					"type" : "nested",
 					"properties" : {
 						"player" : {
 							"type" : "string",
-							"index" : "not_analyzed"
+							"analyzer" : "standard"
 						},
 						"wonSets" : {
 							"type" : "integer"
