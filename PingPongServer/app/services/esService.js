@@ -18,7 +18,7 @@ function getUser(userId, cb) {
 }
 exports.getUser = getUser;
 
-function upsertUser(email, fullname, password, cb) {
+function updateUser(email, fullname, password, cb) {
   var username = email.split("@")[0]
 
   client.update({
@@ -31,12 +31,28 @@ function upsertUser(email, fullname, password, cb) {
         'password': password,
         'email': email,
         'fullname': fullname
-      },
-      doc_as_upsert : true
+      }
     }
   }, cb);
 }
-exports.upsertUser = upsertUser;
+exports.updateUser = updateUser;
+
+function insertUser(email, fullname, password, cb) {
+  var username = email.split("@")[0]
+
+  client.index({
+    index: index,
+    type: userType,
+    id: username,
+    body: {
+      'username': username,
+      'password': password,
+      'email': email,
+      'fullname': fullname
+    }
+  }, cb);
+}
+exports.insertUser = insertUser;
 
 
 /* GAME */

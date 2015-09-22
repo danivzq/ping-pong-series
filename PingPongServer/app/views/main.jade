@@ -3,11 +3,11 @@ extends layout
 block js
   script(type="text/javascript", src='/js/navigation.js')
   script(type="text/javascript", src='/js/home.js')
+  script(type="text/javascript", src='/js/form-validation.js')
   script(type="text/javascript", src='/js/results.js')
   script(type="text/javascript", src='/js/smartpaginator.js')
 block css
   link(rel='stylesheet', href='/css/smartpaginator.css')
-
 
 block body
   div.page
@@ -29,7 +29,7 @@ block body
               td
                 label(for="email") Email address:
               td
-                input#email(type="text", name="email" value="#{email}" onblur="checkEmail()")
+                input#email(type="text", name="email" value="#{email}" onblur="checkEmail(this, $('#email-error'))")
               td
                 p#email-error.error
             tr
@@ -58,7 +58,8 @@ block body
               td
                 label(for="newpassword2") Repeat new password:
               td
-                input#newpassword2(type="password", name="newpassword2" oninput="checkNewPassword()")
+                input#newpassword2(type="password", name="newpassword2"
+                  oninput="checkPasswords($('#newpassword')[0], this, $('#newpassword2-error'))")
               td
                 p#newpassword2-error.error
           div

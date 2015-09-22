@@ -14,6 +14,13 @@ div {
 a {
   color: #00B7FF;
   text-decoration: none;
+  font-weight: bold;
+}
+
+a:focus,
+a:hover,
+a:active {
+  text-decoration: underline;
 }
 
 ul, ol {
@@ -87,7 +94,7 @@ td p.error {
     padding: 50px;
 }
 
-#sign-in {
+.button {
     background-color: #47bae6;
     color: #ffffff;
     display: inline-block;
@@ -97,7 +104,7 @@ td p.error {
     height: auto;
 }
 
-#sign-in:hover {
+.button:hover {
     background-color:#434343;
     cursor: pointer;
 }

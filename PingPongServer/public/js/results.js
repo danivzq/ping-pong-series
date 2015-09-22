@@ -29,9 +29,11 @@ loadResults = function(from, size, filters) {
 
 /*AGGREGATIONS*/
 loadAggs = function(aggs) {
-  var aggsHtml =
-    "<div class='agg'>" +
-      "<p>WINNER</p>"
+  var aggsHtml = "<div class='agg'>"
+
+  if(aggs.victories.doc_count > 0 || aggs.defeats.doc_count > 0){
+    aggsHtml += "<p>WINNER</p>"
+  }
   if(aggs.victories.doc_count > 0){
     aggsHtml +=
       "<div>" +

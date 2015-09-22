@@ -24,12 +24,29 @@ router.get('/', function (req, res, next) {
   }
 });
 
-router.post('/user/upsert', function (req, res, next) {
+router.post('/user/insert', function (req, res, next) {
+  var email = req.body.email;
+  var fullname = req.body.fullname;
+  var password = req.body.password;
+  esService.insertUser(email, fullname, password,
+    function(error, ok) {
+      if(error){
+        console.log(error);
+        res.send(error);
+      }else{
+        console.log(ok);
+        res.send(ok);
+      }
+    }
+  );
+});
+
+router.post('/user/update', function (req, res, next) {
   if(req.session.username){
     var email = req.body.email;
     var fullname = req.body.fullname;
     var password = req.body.password;
-    esService.upsertUser(email, fullname, password,
+    esService.updateUser(email, fullname, password,
       function(error, ok) {
         if(error){
           console.log(error);

@@ -2,6 +2,7 @@ extends layout
 
 block js
   script(type="text/javascript", src='/js/login.js')
+  script(type="text/javascript", src='/js/form-validation.js')
 
 block body
   body(style='padding:50px')
@@ -16,5 +17,27 @@ block body
         div
           input(type="password", name="password", placeholder="Password")
         div
-          input#sign-in(type="button", value="Sign in", onclick="signIn()")
+          input.button(type="button", value="Log in", onclick="logIn()")
+        div
+          a(href="#", onclick="signUpForm()") Do not have an account yet? Sign up here.
+      form#signup-form(action="#", method="post", style="display:none;")
+        div
+          input(type="text", name="username", placeholder="user", disabled)
+        div
+          input(type="text", name="email", placeholder="Email (user@stratio.com)",
+            onblur="loadUser();checkEmail(this, $('#email-error'))")
+          p#email-error.error
+        div
+          input(type="text", name="fullname", placeholder="Full Name")
+        div
+          input#password(type="password", name="password", placeholder="Password")
+        div
+          input(type="password", name="password2", placeholder="Repeat password",
+            oninput="checkPasswords($('#password')[0], this, $('#password2-error'))")
+          p#password2-error.error
+        div
+          p#result
+          input.button(type="button", value="Sign up", onclick="signUp()")
+        div
+          a(href="#", onclick="logInForm()") Already have an account? Log in here.
       p#login-error.error

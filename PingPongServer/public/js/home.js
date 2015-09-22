@@ -6,18 +6,6 @@ showChangePasswordInputs = function() {
     }
 }
 
-checkEmail = function() {
-    var re = /\S+@\S+\.\S+/;
-    var email = $("#email")[0]
-
-    $("#email-error").html("")
-    email.style.borderColor = ""
-    if(!re.test(email.value)){
-        $("#email-error").html("Invalid email address")
-        email.style.borderColor = "#f00"
-    }
-}
-
 checkOldPassword = function() {
     var pass = $("#password")[0]
     var oldpass = $("#oldpassword")[0]
@@ -30,18 +18,6 @@ checkOldPassword = function() {
     }
 }
 
-checkNewPassword = function() {
-    var newpass = $("#newpassword")[0]
-    var newpass2 = $("#newpassword2")[0]
-
-    $("#newpassword2-error").html("")
-    newpass2.style.borderColor = ""
-    if(newpass.value !== newpass2.value){
-        $("#newpassword2-error").html("New passwords must match")
-        newpass2.style.borderColor = "#f00"
-    }
-}
-
 applyChanges = function() {
   var pass
   if($("#pass-change")[0].checked){
@@ -49,7 +25,7 @@ applyChanges = function() {
   }else{
     pass = $("#home-form :input[name='password']").val()
   }
-  var jqxhr = $.post("/user/upsert",
+  var jqxhr = $.post("/user/update",
     {
       email: $("#home-form :input[name='email']").val(),
       fullname: $("#home-form :input[name='fullname']").val(),
