@@ -60,7 +60,18 @@
               "bool": {
                 "should": [
                   {
-                    "winner" : "dvazquez"
+                    "term": {
+                      "winner" : "dvazquez"  
+                    }
+                  },
+                  {
+                    "bool": {
+                      "must_not": {
+                        "term": {
+                          "winner": "dvazquez"
+                        }
+                      }
+                    }
                   }
                 ]
               }
