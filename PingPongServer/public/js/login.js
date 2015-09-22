@@ -26,36 +26,36 @@ loadUser = function() {
   $("#signup-form :input[name='username']")[0].value = $("#signup-form :input[name='email']")[0].value.split("@")[0]
 }
 
-checkPassword = function() {
-    var pass = $("#login-form :input[name='username']")[0]
-    var pass2 = $("#newpassword2")[0]
-
-    $("#newpassword2-error").html("")
-    newpass2.style.borderColor = ""
-    if(newpass.value !== newpass2.value){
-        $("#newpassword2-error").html("New passwords must match")
-        newpass2.style.borderColor = "#f00"
-    }
-}
-
 signUp = function() {
-  var jqxhr = $.post("/user/insert",
-    {
-      email: $("#signup-form :input[name='email']").val(),
-      fullname: $("#signup-form :input[name='fullname']").val(),
-      password: $("#signup-form :input[name='password']").val()
-    })
-    .done(function(data) {
-      if(data.status === "400"){
-        $("#result").html("Error, sign up cannot be done")
+  var email = $("#signup-form :input[name='email']").val()
+  var fullname = $("#signup-form :input[name='fullname']").val()
+  var password = $("#signup-form :input[name='password']").val()
+  var password2 = $("#signup-form :input[name='password2']").val()
+
+  if(email === "" || fullname === "" || password === "" || password2 === ""
+      || !isEmailValid(email) || !passwordsMatch(password,password2)){
+    $("#result").html("Wrong input data")
+    $("#result")[0].style.color = "#F00"
+  }
+  else{
+    var jqxhr = $.post("/user/insert",
+      {
+        email: email,
+        fullname: fullname,
+        password: password
+      })
+      .done(function(data) {
+        if(data.status === "400"){
+          $("#result").html("Error, sign up cannot be done")
+          $("#result")[0].style.color = "#F00"
+        }else{
+          $("#result").html("Sign up successful!")
+          $("#result")[0].style.color = "#080"
+        }
+      })
+      .fail(function(error) {
+        $("#result").html(error.responseText)
         $("#result")[0].style.color = "#F00"
-      }else{
-        $("#result").html("Sign up successful!")
-        $("#result")[0].style.color = "#080"
-      }
-    })
-    .fail(function(error) {
-      $("#result").html(error.responseText)
-      $("#result")[0].style.color = "#F00"
-    });
+      });
+  }
 }
