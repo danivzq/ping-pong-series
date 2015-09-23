@@ -71,18 +71,19 @@ router.post('/match/update', function (req, res, next) {
 });
 
 buildMatchUpdateDoc = function(req, username) {
-  var winner = req.body.sets1 > req.body.sets2 ? req.body.player1 : req.body.player2
-  var pendingBy = req.body.player1 === username ? req.body.player2 : req.body.player1
   var wonSets1 = 0
   var wonSets2 = 0
 
   for( var i = 0; i < req.body.points1.length; i++ ){
-    if(req.body.points1[i] > req.body.points2[i]){
+    if(parseInt(req.body.points1[i]) > parseInt(req.body.points2[i])){
       wonSets1 += 1
     }else{
       wonSets2 += 1
     }
   }
+
+  var winner = wonSets1 > wonSets2 ? req.body.player1 : req.body.player2
+  var pendingBy = req.body.player1 === username ? req.body.player2 : req.body.player1
 
   return {
     'matchType': req.body.matchType,

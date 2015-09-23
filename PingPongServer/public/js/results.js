@@ -120,8 +120,9 @@ loadResultsTable = function(hits, username) {
         "</tr>" +
         "<tr style='display:none'>" +
           "<td></td><td></td><td>"
-    for(var point of hit._source.details[0].points){
-      if(point > hit._source.details[1].points[hit._source.details[0].points.indexOf(point)]){
+    for(var i = 0; i < hit._source.details[0].points.length; i++){
+      var point = parseInt(hit._source.details[0].points[i])
+      if(point > hit._source.details[1].points[i]){
         resultstable += "<b>" + point + "</b></br>"
       }else{
         resultstable += point + "</br>"
@@ -129,8 +130,9 @@ loadResultsTable = function(hits, username) {
     }
     resultstable +=
           "</td><td>-</td><td>"
-    for(var point of hit._source.details[1].points){
-      if(point > hit._source.details[0].points[hit._source.details[1].points.indexOf(point)]){
+    for(var i = 0; i < hit._source.details[1].points.length; i++){
+      var point = parseInt(hit._source.details[1].points[i])
+      if(point > hit._source.details[0].points[i]){
         resultstable += "<b>" + point + "</b></br>"
       }else{
         resultstable += point + "</br>"
