@@ -70,6 +70,10 @@ input.checkbox, label.checkbox:hover{
     background-color:#47BAE6;
 }
 
+.black {
+    background-color:#000;
+}
+
 .error {
     color: #F00;
     margin: 0;
@@ -84,6 +88,26 @@ td p.error {
     margin: 0;
 }
 
+.button {
+    color: #fff;
+    display: inline-block;
+    font-size: 14px;
+    padding: 5px 20px;
+    margin: 20px;
+    text-decoration: none;
+    height: auto;
+}
+
+.button:hover {
+    background-color:#434343;
+    cursor: pointer;
+}
+
+#result {
+    text-align: center;
+    margin: 30px;
+}
+
 /* LOGIN */
 .login {
     width:auto;
@@ -92,21 +116,6 @@ td p.error {
     text-align: center;
     border-style: groove;
     padding: 50px;
-}
-
-.button {
-    background-color: #47bae6;
-    color: #ffffff;
-    display: inline-block;
-    font-size: 14px;
-    padding: 5px 20px;
-    text-decoration: none;
-    height: auto;
-}
-
-.button:hover {
-    background-color:#434343;
-    cursor: pointer;
 }
 
 /* NAVIGATION PANEL */
@@ -193,22 +202,6 @@ td p.error {
 
 /* HOME VIEW */
 
-#apply {
-    background-color: #000;
-    color: #fff;
-    display: inline-block;
-    font-size: 14px;
-    padding: 5px 20px;
-    margin: 20px;
-    text-decoration: none;
-    height: auto;
-}
-
-#apply:hover {
-    background-color:#434343;
-    cursor: pointer;
-}
-
 #home-form table {
     width: 500px;
 }
@@ -218,10 +211,6 @@ td p.error {
 }
 
 /* RESULTS VIEW */
-
-#results {
-    width:auto;
-}
 
 .aggs {
     display:inline-table;
@@ -256,7 +245,7 @@ td p.error {
     margin-left: 40px;
 }
 
-#resultstable {
+.results table {
   border-spacing: 0px;
   width: 100%;
 }
@@ -273,6 +262,13 @@ td p.error {
     padding: 10px;
     text-align: center;
     border-top: 1px solid #fff ;
+}
+
+.results div img {
+    margin: 2px;
+    height: 20px;
+    padding: 5px 10px;
+    border-radius: 5px;
 }
 
 .pagination {
@@ -306,6 +302,20 @@ td p.error {
     background-color:#CCFFCC;
 }
 
+.victory:hover {
+    background-color:#99CC99;
+    cursor: pointer;
+}
+
 .defeat {
     background-color:#FFCCCC;
+}
+
+.defeat:hover {
+    background-color:#CC9999;
+    cursor: pointer;
+}
+
+#deletescore:hover {
+    cursor: pointer;
 }

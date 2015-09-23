@@ -1,6 +1,6 @@
 var express = require('express'),
   router = express.Router(),
-  esService = require('../services/esService');
+  esUserService = require('../services/esUserService');
 
 module.exports = function (app) {
   app.use('/', router);
@@ -11,7 +11,7 @@ router.get('/login', function (req, res, next) {
   var password = req.query.password;
   console.log("Login: " + username + " - " + password);
 
-  esService.getUser(username,
+  esUserService.getUser(username,
     function(error, user) {
       if(error){
         res.status(400).send('Wrong user');

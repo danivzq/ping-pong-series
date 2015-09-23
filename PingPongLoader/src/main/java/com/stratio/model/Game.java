@@ -22,11 +22,16 @@ public class Game {
         }
     }
 
+    public enum StatusTypeEnum {
+        PENDING, CONFIRMED;
+    }
+
     private MatchTypeEnum matchType;
     private String gameType;
     private String date;
     private String winner;
     private List<Detail> details;
+    private StatusTypeEnum status;
 
     public MatchTypeEnum getMatchType() {
         return matchType;
@@ -66,5 +71,13 @@ public class Game {
 
     public void setDetails(List<Detail> details) {
         this.details = details;
+    }
+
+    public StatusTypeEnum getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusTypeEnum status) {
+        this.status = status;
     }
 }

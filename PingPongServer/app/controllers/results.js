@@ -1,6 +1,6 @@
 var express = require('express'),
   router = express.Router(),
-  esService = require('../services/esService');
+  esGameService = require('../services/esGameService');
 
 module.exports = function (app) {
   app.use('/', router);
@@ -12,7 +12,7 @@ router.get('/results', function (req, res, next) {
     var from = req.query.from;
     var size = req.query.size;
     var filters = buildFilters(req.query.filters, username);
-    esService.getResults(username, from, size, filters,
+    esGameService.searchGames(username, from, size, filters,
       function (error, data) {
         if(error){
           console.log(error);
@@ -46,5 +46,6 @@ buildFilters = function(filters, username){
       esFilters.push(termFilter);
     }
   }
+  esFilters.push({term:{'status':'CONFIRMED'}});
   return esFilters;
 }

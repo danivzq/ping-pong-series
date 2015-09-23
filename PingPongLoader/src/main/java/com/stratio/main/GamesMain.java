@@ -70,6 +70,7 @@ public class GamesMain {
         details.add(buildPlayerDetail(fieldValues[4], fieldValues[5], fieldValues[6]));
         details.add(buildPlayerDetail(fieldValues[7], fieldValues[8], fieldValues[9]));
         game.setDetails(details);
+        game.setStatus(Game.StatusTypeEnum.CONFIRMED);
         return game;
     }
 

@@ -10,10 +10,18 @@ $(document).ready(function() {
       $(location).attr('href', '/');
     }
   );
+  $( "#nav-matches" ).click(
+    function(){
+      cleanSelectedNavigation()
+      $("#nav-matches")[0].className = "selected"
+      loadMatches(0, 20)
+    }
+  );
   $( "#nav-results" ).click(
     function(){
-      loadResults(0, 20)
+      cleanSelectedNavigation()
       $("#nav-results")[0].className = "selected"
+      loadResults(0, 20)
     }
   );
    $( "#logout" ).click(
@@ -28,4 +36,11 @@ $(document).ready(function() {
       showChangePasswordInputs()
     }
   );
+
 });
+
+cleanSelectedNavigation = function() {
+  $("#nav-home")[0].className = ""
+  $("#nav-matches")[0].className = ""
+  $("#nav-results")[0].className = ""
+}

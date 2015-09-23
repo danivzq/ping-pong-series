@@ -1,6 +1,4 @@
 loadResults = function(from, size, filters) {
-  $("#nav-home")[0].className = ""
-  $("#nav-results")[0].className = "selected"
   var jqxhr = $.get( "/results",
     {
       from:from,
@@ -111,13 +109,35 @@ loadResultsTable = function(hits, username) {
       "<tbody>"
   for(var hit of hits.hits){
     resultstable +=
-        "<tr class="+(hit._source.winner.indexOf(username) > -1 ? 'victory' : 'defeat')+">" +
+        "<tr class="+(hit._source.winner.indexOf(username) > -1 ? 'victory' : 'defeat')+
+        " onclick='showDetails(this)'>" +
           "<td>"+hit._source.matchType+"</td>" +
           "<td>"+hit._source.gameType+"</td>" +
           "<td class="+(hit._source.details[0].player === hit._source.winner ? 'winner' : '')+">"+hit._source.details[0].player+"</td>" +
           "<td>"+hit._source.details[0].wonSets+" - "+hit._source.details[1].wonSets+"</td>" +
           "<td class="+(hit._source.details[1].player === hit._source.winner ? 'winner' : '')+">"+hit._source.details[1].player+"</td>" +
           "<td>"+hit._source.date+"</td>" +
+        "</tr>" +
+        "<tr style='display:none'>" +
+          "<td></td><td></td><td>"
+    for(var point of hit._source.details[0].points){
+      if(point > hit._source.details[1].points[hit._source.details[0].points.indexOf(point)]){
+        resultstable += "<b>" + point + "</b></br>"
+      }else{
+        resultstable += point + "</br>"
+      }
+    }
+    resultstable +=
+          "</td><td>-</td><td>"
+    for(var point of hit._source.details[1].points){
+      if(point > hit._source.details[0].points[hit._source.details[1].points.indexOf(point)]){
+        resultstable += "<b>" + point + "</b></br>"
+      }else{
+        resultstable += point + "</br>"
+      }
+    }
+    resultstable +=
+          "</td><td></td>" +
         "</tr>"
   }
   resultstable += "</tbody></table>"
@@ -125,20 +145,11 @@ loadResultsTable = function(hits, username) {
   $('div#results').append($total, resultstable, $smartpaginator)
 }
 
-/*PAGINATION*/
-loadPagination = function(total, from) {
-  $('#smart-paginator').smartpaginator({
-    totalrecords: total,
-    recordsperpage: 20,
-    initval:(from/20)+1 ,
-    next: 'Next',
-    prev: 'Prev',
-    first: 'First',
-    last: 'Last',
-    theme: 'black',
-    onchange: onChange
-  })
-}
-function onChange(newPageValue) {
-  loadResults((newPageValue-1)*20, 20)
+showDetails = function(element) {
+  if(element.nextSibling.style.display == "none"){
+    element.nextSibling.style.display=""
+  }else{
+    element.nextSibling.style.display="none"
+  }
+
 }

@@ -58,6 +58,14 @@ curl -XPOST  "http://$1/ping-pong-series" -d '{
 							"type" : "integer"
 						}
 					}
+				},
+				"status" : {
+					"type" : "string",
+					"index" : "not_analyzed"
+				},
+				"pendingBy" : {
+					"type" : "string",
+					"index" : "not_analyzed"
 				}
 			}
 		},

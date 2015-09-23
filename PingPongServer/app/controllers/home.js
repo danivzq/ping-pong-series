@@ -1,6 +1,6 @@
 var express = require('express'),
   router = express.Router()
-  esService = require('../services/esService');
+  esUserService = require('../services/esUserService');
 
 module.exports = function (app) {
   app.use('/', router);
@@ -8,7 +8,7 @@ module.exports = function (app) {
 
 router.get('/', function (req, res, next) {
   if(req.session.username){
-    esService.getUser(req.session.username,
+    esUserService.getUser(req.session.username,
       function(error, user) {
         if(error){
           console.log(error);
@@ -28,7 +28,7 @@ router.post('/user/insert', function (req, res, next) {
   var email = req.body.email;
   var fullname = req.body.fullname;
   var password = req.body.password;
-  esService.insertUser(email, fullname, password,
+  esUserService.insertUser(email, fullname, password,
     function(error, ok) {
       if(error){
         console.log(error);
@@ -46,7 +46,7 @@ router.post('/user/update', function (req, res, next) {
     var email = req.body.email;
     var fullname = req.body.fullname;
     var password = req.body.password;
-    esService.updateUser(email, fullname, password,
+    esUserService.updateUser(email, fullname, password,
       function(error, ok) {
         if(error){
           console.log(error);

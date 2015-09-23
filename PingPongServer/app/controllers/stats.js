@@ -1,6 +1,6 @@
 var express = require('express'),
   router = express.Router(),
-  esService = require('../services/esService');
+  esGameService = require('../services/esGameService');
 
 module.exports = function (app) {
   app.use('/', router);
@@ -11,7 +11,7 @@ router.get('/stats', function (req, res, next) {
   if(username){
     var from = req.query.from;
     var size = req.query.size;
-    esService.getStats(username,
+    esGameService.getStats(username,
       function (error, data) {
         if(error){
           console.log(error);
