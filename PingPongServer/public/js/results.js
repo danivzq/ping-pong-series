@@ -1,9 +1,10 @@
-loadResults = function(from, size, filters) {
+loadResults = function(from, size, filters, sort) {
   var jqxhr = $.get( "/results",
     {
       from:from,
       size:size,
-      filters: filters
+      filters: filters,
+      sort: sort
     },
     function(data, status, request) {
       $("div#main-content").html("")
@@ -13,11 +14,14 @@ loadResults = function(from, size, filters) {
       var $error = $("<div id='error' class='error'/>" )
       $("div#main-content").append($aggs, $results, $error)
 
-      loadAggs(data.aggregations)
+      loadAggs(data.aggregations, filters && filters.length > 0)
       checkUsedFilters(filters)
+
       loadResultsTable(data.hits, request.getResponseHeader("username"))
+      checkUsedSort(sort)
+
       if(data.hits.total > 20){
-        loadPagination(data.hits.total, from)
+        loadResultsPagination(data.hits.total, from)
       }
     })
     .fail(function(error) {
@@ -26,33 +30,41 @@ loadResults = function(from, size, filters) {
 }
 
 /*AGGREGATIONS*/
-loadAggs = function(aggs) {
-  var aggsHtml = "<div class='agg'>"
-
+loadAggs = function(aggs, isSomeFilterSelected) {
+  var aggsHtml = ""
   if(aggs.victories.doc_count > 0 || aggs.defeats.doc_count > 0){
+    aggsHtml += "<div class='agg'>"
     aggsHtml += "<p>WINNER</p>"
-  }
-  if(aggs.victories.doc_count > 0){
-    aggsHtml +=
-      "<div>" +
-          "<input class='checkbox' id='victories' type='checkbox'/>" +
-          "<label class='checkbox' for='victories'>Victory ("+aggs.victories.doc_count+")</label>" +
-      "</div>"
-  }
-  if(aggs.defeats.doc_count > 0){
+    if(aggs.victories.doc_count > 0){
       aggsHtml +=
-      "<div>" +
-          "<input class='checkbox' id='defeats' type='checkbox'/>" +
-          "<label class='checkbox' for='defeats'>Defeat ("+aggs.defeats.doc_count+")</label>" +
-      "</div>"
+        "<div>" +
+            "<input class='checkbox' id='victories' type='checkbox'/>" +
+            "<label class='checkbox' for='victories'>Victory ("+aggs.victories.doc_count+")</label>" +
+        "</div>"
+    }
+    if(aggs.defeats.doc_count > 0){
+        aggsHtml +=
+        "<div>" +
+            "<input class='checkbox' id='defeats' type='checkbox'/>" +
+            "<label class='checkbox' for='defeats'>Defeat ("+aggs.defeats.doc_count+")</label>" +
+        "</div>"
+    }
+    aggsHtml += "</div>"
   }
-  aggsHtml += "</div>"
+
   $('div#aggs').html(aggsHtml)
   loadDinamicAgg(aggs.matchType.buckets, "MATCH TYPE", "matchType")
   loadDinamicAgg(aggs.gameType.buckets, "GAME TYPE", "gameType")
+
+  $('div#aggs').append(
+          "<div id='clean' class='agg' style='text-align:center;padding:5px;display:" +
+          (isSomeFilterSelected ? '' : 'none')+ "'>" +
+            "<img class='black button' src='/img/clean.png' onclick='cleanFilters(this.parentNode)'>" +
+          "</div>")
+
   $("#aggs").find("input").change(
     function(){
-      filterResults($("#aggs").find("input"))
+      loadResults(0, 20, getFilters(), getSort())
     }
   );
 }
@@ -77,8 +89,31 @@ checkUsedFilters = function(filters) {
     }
   }
 }
-filterResults = function(inputs) {
+checkUsedSort = function(sort) {
+  if(sort !== undefined){
+    for(var s of sort){
+      if(s.value === "desc"){
+        $("#"+s.field+"_desc_sort")[0].style.display = ""
+        $("#"+s.field+"_asc_sort")[0].style.display = "none"
+      }else {
+        $("#"+s.field+"_desc_sort")[0].style.display = "none"
+        $("#"+s.field+"_asc_sort")[0].style.display = ""
+      }
+    }
+  }
+}
+cleanFilters = function(cleanButtonDiv){
+  var inputs = $("#aggs").find("input")
+  for(var i in inputs){
+    inputs[i].checked = false
+  }
+  loadResults(0, 20, getFilters(), getSort())
+}
+
+getFilters = function() {
   var filters = [];
+
+  var inputs = $("#aggs").find("input")
   for(var i in inputs){
     if(inputs[i].checked){
       if(inputs[i].id === "victories" || inputs[i].id === "defeats"){
@@ -88,7 +123,16 @@ filterResults = function(inputs) {
       }
     }
   }
-  loadResults(0, 20, filters);
+
+  return filters
+}
+
+getSort = function() {
+  if($("#date_desc_sort")[0].style.display === ""){
+    return [{field : 'date', value : 'desc'}]
+  }else{
+    return [{field : 'date', value : 'asc'}]
+  }
 }
 
 /*RESULTS TABLE*/
@@ -103,7 +147,11 @@ loadResultsTable = function(hits, username) {
           "<th>Player 1</th>" +
           "<th>Score</th>" +
           "<th>Player 2</th>" +
-          "<th>Date</th>" +
+          "<th class='clickable' onclick='sortResults(this)'>" +
+            "Date" +
+            "<img id='date_desc_sort' src='/img/sort_desc.png' style='float:right'/>" +
+            "<img id='date_asc_sort' src='/img/sort_asc.png' style='float:right;display:none'/>" +
+          "</th>" +
         "</tr>" +
       "</thead>" +
       "<tbody>"
@@ -147,11 +195,38 @@ loadResultsTable = function(hits, username) {
   $('div#results').append($total, resultstable, $smartpaginator)
 }
 
+sortResults = function(element) {
+  if(element.firstElementChild.style.display == ""){
+    element.firstElementChild.style.display = "none"
+    element.firstElementChild.nextSibling.style.display = ""
+  }else{
+    element.firstElementChild.style.display = ""
+    element.firstElementChild.nextSibling.style.display = "none"
+  }
+
+  loadResults(0, 20, getFilters(), getSort())
+}
+
 showDetails = function(element) {
   if(element.nextSibling.style.display == "none"){
     element.nextSibling.style.display=""
   }else{
     element.nextSibling.style.display="none"
   }
+}
 
+loadResultsPagination = function(total, from) {
+  $('#smart-paginator').smartpaginator({
+    totalrecords: total,
+    recordsperpage: 20,
+    initval:(from/20)+1 ,
+    next: 'Next',
+    prev: 'Prev',
+    first: 'First',
+    last: 'Last',
+    theme: 'black',
+    onchange: function(newPageValue){
+      loadResults((newPageValue-1)*20, 20, getFilters(), getSort())
+    }
+  })
 }

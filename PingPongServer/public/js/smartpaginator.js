@@ -233,20 +233,3 @@
         }
     });
 })(jQuery);
-
-loadPagination = function(total, from) {
-  $('#smart-paginator').smartpaginator({
-    totalrecords: total,
-    recordsperpage: 20,
-    initval:(from/20)+1 ,
-    next: 'Next',
-    prev: 'Prev',
-    first: 'First',
-    last: 'Last',
-    theme: 'black',
-    onchange: onChange
-  })
-}
-function onChange(newPageValue) {
-  loadMatches((newPageValue-1)*20, 20)
-}

@@ -98,7 +98,7 @@ td p.error {
     height: auto;
 }
 
-.button:hover {
+.button:hover, .clickable:hover  {
     background-color:#434343;
     cursor: pointer;
 }
@@ -215,11 +215,21 @@ td p.error {
 .aggs {
     display:inline-table;
     margin-top: 40px;
+    min-width: 200px;
 }
 
 .agg {
     padding: 20px;
     width: inherit;
+}
+
+.agg img {
+    height: 30px;
+    width: 60px;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    border-style: outset;
 }
 
 .agg p{
@@ -318,4 +328,8 @@ td p.error {
 
 #deletescore:hover {
     cursor: pointer;
+}
+
+#date_desc_sort, #date_asc_sort {
+    height: 15px;
 }

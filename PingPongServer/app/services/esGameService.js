@@ -8,7 +8,7 @@ var client = new elasticsearch.Client({
 var index = "ping-pong-series";
 var gameType = "game";
 
-function searchGames(username, from, size, filters, cb) {
+function searchGames(username, from, size, filters, sort, cb) {
     if(filters == null){
       client.search({
             index: index,
@@ -28,9 +28,7 @@ function searchGames(username, from, size, filters, cb) {
                   }
                 }
               },
-              sort: {
-                date: 'desc'
-              },
+              sort: sort,
               aggregations: {
                 matchType: {
                   terms: {
@@ -89,9 +87,7 @@ function searchGames(username, from, size, filters, cb) {
                   }
                 }
               },
-              sort: {
-                date: 'desc'
-              },
+              sort: sort,
               aggregations: {
                 matchType: {
                   terms: {

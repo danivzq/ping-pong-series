@@ -12,7 +12,7 @@ loadMatches = function(from, size, msgOK) {
 
       loadMatchesTable(data.hits, request.getResponseHeader("username"))
       if(data.hits.total > 20){
-        loadPagination(data.hits.total, from)
+        loadMatchesPagination(data.hits.total, from)
       }
       if(msgOK){
         $("#result").html(msgOK)
@@ -330,4 +330,20 @@ showWaitingIcon = function(matchId) {
 showButtons = function(matchId) {
   $("#" + matchId + " div#buttons")[0].style.display = ""
   $("#" + matchId + " div#waiting")[0].style.display = "none"
+}
+
+loadMatchesPagination = function(total, from) {
+  $('#smart-paginator').smartpaginator({
+    totalrecords: total,
+    recordsperpage: 20,
+    initval:(from/20)+1 ,
+    next: 'Next',
+    prev: 'Prev',
+    first: 'First',
+    last: 'Last',
+    theme: 'black',
+    onchange: function(newPageValue) {
+      loadMatches((newPageValue-1)*20, 20)
+    }
+  })
 }

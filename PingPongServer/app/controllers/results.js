@@ -12,7 +12,8 @@ router.get('/results', function (req, res, next) {
     var from = req.query.from;
     var size = req.query.size;
     var filters = buildFilters(req.query.filters, username);
-    esGameService.searchGames(username, from, size, filters,
+    var sort = buildSort(req.query.sort);
+    esGameService.searchGames(username, from, size, filters, sort,
       function (error, data) {
         if(error){
           console.log(error);
@@ -33,7 +34,7 @@ router.get('/results', function (req, res, next) {
 buildFilters = function(filters, username){
   var esFilters = [];
   for(var i in filters){
-    f = filters[i]
+    var f = filters[i]
     esFilters.push({bool:{should:[]}});
     console.log(esFilters[0])
     if(f.field === "winner" && f.value === "victories"){
@@ -48,4 +49,15 @@ buildFilters = function(filters, username){
   }
   esFilters.push({term:{'status':'CONFIRMED'}});
   return esFilters;
+}
+
+buildSort = function(sort){
+  var esSorts = [];
+  for(var i in sort){
+    var s = sort[i];
+    var esSort = {};
+    esSort[s.field] = s.value;
+    esSorts.push(esSort)
+  }
+  return esSorts;
 }
