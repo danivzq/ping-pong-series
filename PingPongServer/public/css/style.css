@@ -70,6 +70,11 @@ input.checkbox, label.checkbox:hover{
     background-color:#47BAE6;
 }
 
+.bold-red {
+    color: #F00;
+    font-weight: bold;
+}
+
 .black {
     background-color:#000;
 }
@@ -219,7 +224,7 @@ td p.error {
 }
 
 .agg {
-    padding: 20px;
+    padding: 10px;
     width: inherit;
 }
 
@@ -238,7 +243,7 @@ td p.error {
     font-style: italic;
 }
 
-.agg div{
+.agg div, .agg table{
     padding-top: 5px;
 }
 
@@ -279,6 +284,33 @@ td p.error {
     height: 20px;
     padding: 5px 10px;
     border-radius: 5px;
+}
+
+.topten {
+    display:inline-table;
+    vertical-align: top;
+    min-width: 20%;
+    margin-left: 40px;
+    margin-top: 20px;
+}
+
+.topten table {
+  border-spacing: 0px;
+  width: 100%;
+}
+
+.topten tr th {
+    background-color:#000;
+    color:#fff;
+    padding: 5px;
+    border-right: 1px solid #666;
+    font-size: 12px;
+}
+
+.topten tr td {
+    padding: 10px;
+    text-align: center;
+    border-top: 1px solid #fff;
 }
 
 .pagination {

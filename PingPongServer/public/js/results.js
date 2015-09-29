@@ -31,7 +31,20 @@ loadResults = function(from, size, filters, sort) {
 
 /*AGGREGATIONS*/
 loadAggs = function(aggs, isSomeFilterSelected) {
-  var aggsHtml = ""
+  var aggsHtml =
+    "<div class='agg'>" +
+      "<p>DATE</p>" +
+      "<table>" +
+        "<tr>" +
+          "<td><label for='datefrom'>From</label></td>" +
+          "<td><input type='date' name='datefrom' style='float:right;'/></td>" +
+        "</tr>" +
+        "<tr>" +
+          "<td><label for='dateto'>To</label></td>" +
+          "<td><input type='date' name='dateto' style='float:right;'/></td>" +
+        "</tr>" +
+      "</table>" +
+    "</div>"
   if(aggs.victories.doc_count > 0 || aggs.defeats.doc_count > 0){
     aggsHtml += "<div class='agg'>"
     aggsHtml += "<p>WINNER</p>"
@@ -57,10 +70,10 @@ loadAggs = function(aggs, isSomeFilterSelected) {
   loadDinamicAgg(aggs.gameType.buckets, "GAME TYPE", "gameType")
 
   $('div#aggs').append(
-          "<div id='clean' class='agg' style='text-align:center;padding:5px;display:" +
-          (isSomeFilterSelected ? '' : 'none')+ "'>" +
-            "<img class='black button' src='/img/clean.png' onclick='cleanFilters(this.parentNode)'>" +
-          "</div>")
+    "<div id='clean' class='agg' style='text-align:center;padding:5px;display:" +
+    (isSomeFilterSelected ? '' : 'none')+ "'>" +
+      "<img class='black button' src='/img/clean.png' onclick='cleanFilters(this.parentNode)'>" +
+    "</div>")
 
   $("#aggs").find("input").change(
     function(){
@@ -85,7 +98,11 @@ loadDinamicAgg = function(buckets, title, name){
 checkUsedFilters = function(filters) {
   if(filters !== undefined){
     for(var filter of filters){
-      $("#"+filter.value).prop('checked', true);
+      if($("#"+filter.value)[0]){
+        $("#"+filter.value).prop('checked', true);
+      }else{
+        $("#aggs :input[name=" + filter.field + "]").val(filter.value)
+      }
     }
   }
 }
@@ -104,8 +121,12 @@ checkUsedSort = function(sort) {
 }
 cleanFilters = function(cleanButtonDiv){
   var inputs = $("#aggs").find("input")
-  for(var i in inputs){
-    inputs[i].checked = false
+  for(var i = 0; i<inputs.length; i++){
+    if(inputs[i].type === "checkbox"){
+      inputs[i].checked = false
+    }else{
+      inputs[i].value = ""
+    }
   }
   loadResults(0, 20, getFilters(), getSort())
 }
@@ -114,13 +135,15 @@ getFilters = function() {
   var filters = [];
 
   var inputs = $("#aggs").find("input")
-  for(var i in inputs){
-    if(inputs[i].checked){
+  for(var i = 0; i<inputs.length; i++){
+    if(inputs[i].type === "checkbox" && inputs[i].checked){
       if(inputs[i].id === "victories" || inputs[i].id === "defeats"){
         filters.push({field:"winner", value:inputs[i].id})
       }else{
         filters.push({field:inputs[i].name, value:inputs[i].id})
       }
+    }else if(inputs[i].type !== "checkbox" && inputs[i].value !== ""){
+      filters.push({field:inputs[i].name, value:inputs[i].value})
     }
   }
 

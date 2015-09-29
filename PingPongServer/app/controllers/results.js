@@ -25,20 +25,24 @@ router.get('/results', function (req, res, next) {
       }
     );
   }else{
-    res.render('login', {
-      title: 'Stratio Ping-Pong Series'
-    });
+    res.render('login');
   }
 });
 
 buildFilters = function(filters, username){
   var esFilters = [];
+  var dateRangeFilter = {range:{'date':{}}}
   for(var i in filters){
     var f = filters[i]
     esFilters.push({bool:{should:[]}});
-    console.log(esFilters[0])
-    if(f.field === "winner" && f.value === "victories"){
+    if(f.field === "datefrom"){
+      dateRangeFilter.range.date['gte']=f.value
+    }else if(f.field === "dateto"){
+      dateRangeFilter.range.date['lte']=f.value
+    }else if(f.field === "winner" && f.value === "victories"){
       esFilters[0].bool.should.push({term: {'winner' : username } });
+    }else if(f.field === "winner" && f.value === "defeats"){
+      esFilters[0].bool.should.push({bool: {must_not: {term: {'winner': username } } } });
     }else if(f.field === "winner" && f.value === "defeats"){
       esFilters[0].bool.should.push({bool: {must_not: {term: {'winner': username } } } });
     }else{
@@ -46,6 +50,9 @@ buildFilters = function(filters, username){
       termFilter.term[f.field] = f.value;
       esFilters.push(termFilter);
     }
+  }
+  if(dateRangeFilter.range.date.gte || dateRangeFilter.range.date.lte){
+    esFilters.push(dateRangeFilter);
   }
   esFilters.push({term:{'status':'CONFIRMED'}});
   return esFilters;
