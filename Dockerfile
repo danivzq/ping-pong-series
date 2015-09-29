@@ -5,8 +5,6 @@ FROM elasticsearch
 #################
 # install plugins in elasticsearch
 RUN plugin -i mobz/elasticsearch-head
-# index creation
-ADD ping-pong-index.sh /tmp/ping-pong-index.sh
 
 ###########
 # Node JS #
@@ -16,3 +14,15 @@ RUN apt-get update
 RUN apt-get -y install nodejs
 # install npm
 RUN apt-get -y install npm
+
+##########
+#  App   #
+##########
+ADD PingPongServer /tmp/PingPongServer
+WORKDIR /tmp/PingPongServer
+
+# install packages
+RUN npm install
+
+# TODO define entrypoint index creation
+ADD ping-pong-index.sh /tmp/ping-pong-index.sh
