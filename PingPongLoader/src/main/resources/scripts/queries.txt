@@ -115,3 +115,68 @@
     }
   }
 }
+
+//TOP TEN TRAINING
+{
+  "size": 0,
+  "query": {
+    "bool": {
+      "must": {
+        "term": {
+          "gameType": "training"
+        }
+      }
+    }
+  },
+  "aggs": {
+    "topwins": {
+      "terms": {
+        "field": "winner"
+      }
+    },
+    "toppoints": {
+      "nested": {
+        "path": "details"
+      },
+      "aggregations": {
+        "user": {
+          "terms": {
+            "field": "details.player",
+            "order": {
+              "points": "desc"
+            }
+          },
+          "aggregations": {
+            "points": {
+              "sum": {
+                "field": "details.totalPoints"
+              }
+            }
+          }
+        }
+      }
+    },
+    "topsets": {
+      "nested": {
+        "path": "details"
+      },
+      "aggregations": {
+        "user": {
+          "terms": {
+            "field": "details.player",
+            "order": {
+              "sets": "desc"
+            }
+          },
+          "aggregations": {
+            "sets": {
+              "sum": {
+                "field": "details.wonSets"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

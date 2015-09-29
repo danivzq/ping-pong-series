@@ -6,6 +6,25 @@ module.exports = function (app) {
   app.use('/', router);
 };
 
+router.get('/stats/topten', function (req, res, next) {
+  var username = req.session.username
+  if(username){
+    esGameService.getTopTen(
+      function (error, data) {
+        if(error){
+          console.log(error);
+          res.send(error);
+        }else{
+          res.set("username", username);
+          res.send(data);
+        }
+      }
+    );
+  }else{
+    res.render('login');
+  }
+});
+
 router.get('/stats', function (req, res, next) {
   var username = req.session.username
   if(username){

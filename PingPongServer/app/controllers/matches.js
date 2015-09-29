@@ -12,21 +12,20 @@ router.get('/matches', function (req, res, next) {
     var from = req.query.from;
     var size = req.query.size;
     var filters = [{term:{'status':'PENDING'}}];
-    esGameService.searchGames(username, from, size, filters,
+    var sort = {'date' : 'desc'}
+    esGameService.searchGames(username, from, size, filters, sort,
       function (error, data) {
         if(error){
           console.log(error);
           res.send(error);
         }else{
-          res.set("username", username)
+          res.set("username", username);
           res.send(data);
         }
       }
     );
   }else{
-    res.render('login', {
-      title: 'Stratio Ping-Pong Series'
-    });
+    res.render('login');
   }
 });
 

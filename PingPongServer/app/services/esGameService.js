@@ -8,7 +8,7 @@ var client = new elasticsearch.Client({
 var index = "ping-pong-series";
 var gameType = "game";
 
-function searchGames(username, from, size, filters, cb) {
+function searchGames(username, from, size, filters, sort, cb) {
     if(filters == null){
       client.search({
             index: index,
@@ -28,9 +28,7 @@ function searchGames(username, from, size, filters, cb) {
                   }
                 }
               },
-              sort: {
-                date: 'desc'
-              },
+              sort: sort,
               aggregations: {
                 matchType: {
                   terms: {
@@ -89,9 +87,7 @@ function searchGames(username, from, size, filters, cb) {
                   }
                 }
               },
-              sort: {
-                date: 'desc'
-              },
+              sort: sort,
               aggregations: {
                 matchType: {
                   terms: {
@@ -173,3 +169,74 @@ function deleteGame(id, cb) {
   }, cb);
 }
 exports.deleteGame = deleteGame;
+
+function getTopTen(cb) {
+  client.search({
+    index: index,
+    type: gameType,
+    body: {
+      size: 0,
+      query: {
+        bool: {
+          must_not: {
+            term: {
+              'gameType': 'training'
+            }
+          }
+        }
+      },
+      aggs: {
+        'topwins': {
+          terms: {
+            field: 'winner'
+          }
+        },
+        'toppoints': {
+          nested: {
+            path: 'details'
+          },
+          aggs: {
+            'user': {
+              terms: {
+                field: 'details.player',
+                order: {
+                  'points': 'desc'
+                }
+              },
+              aggs: {
+                'points': {
+                  sum: {
+                    field: 'details.totalPoints'
+                  }
+                }
+              }
+            }
+          }
+        },
+        'topsets': {
+          nested: {
+            path: 'details'
+          },
+          aggs: {
+            'user': {
+              terms: {
+                field: 'details.player',
+                order: {
+                  'sets': 'desc'
+                }
+              },
+              aggs: {
+                'sets': {
+                  sum: {
+                    field: 'details.wonSets'
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }, cb);
+}
+exports.getTopTen = getTopTen;

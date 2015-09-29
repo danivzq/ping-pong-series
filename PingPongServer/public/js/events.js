@@ -24,6 +24,13 @@ $(document).ready(function() {
       loadResults(0, 20)
     }
   );
+  $( "#nav-topten" ).click(
+    function(){
+      cleanSelectedNavigation()
+      $("#nav-topten")[0].className = "selected"
+      loadTopTen()
+    }
+  );
    $( "#logout" ).click(
       function(){
         $(location).attr('href', '/logout')

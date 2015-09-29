@@ -70,6 +70,11 @@ input.checkbox, label.checkbox:hover{
     background-color:#47BAE6;
 }
 
+.bold-red {
+    color: #F00;
+    font-weight: bold;
+}
+
 .black {
     background-color:#000;
 }
@@ -98,7 +103,7 @@ td p.error {
     height: auto;
 }
 
-.button:hover {
+.button:hover, .clickable:hover  {
     background-color:#434343;
     cursor: pointer;
 }
@@ -215,11 +220,21 @@ td p.error {
 .aggs {
     display:inline-table;
     margin-top: 40px;
+    min-width: 200px;
 }
 
 .agg {
-    padding: 20px;
+    padding: 10px;
     width: inherit;
+}
+
+.agg img {
+    height: 30px;
+    width: 60px;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+    border-style: outset;
 }
 
 .agg p{
@@ -228,7 +243,7 @@ td p.error {
     font-style: italic;
 }
 
-.agg div{
+.agg div, .agg table{
     padding-top: 5px;
 }
 
@@ -269,6 +284,33 @@ td p.error {
     height: 20px;
     padding: 5px 10px;
     border-radius: 5px;
+}
+
+.topten {
+    display:inline-table;
+    vertical-align: top;
+    min-width: 20%;
+    margin-left: 40px;
+    margin-top: 20px;
+}
+
+.topten table {
+  border-spacing: 0px;
+  width: 100%;
+}
+
+.topten tr th {
+    background-color:#000;
+    color:#fff;
+    padding: 5px;
+    border-right: 1px solid #666;
+    font-size: 12px;
+}
+
+.topten tr td {
+    padding: 10px;
+    text-align: center;
+    border-top: 1px solid #fff;
 }
 
 .pagination {
@@ -318,4 +360,8 @@ td p.error {
 
 #deletescore:hover {
     cursor: pointer;
+}
+
+#date_desc_sort, #date_asc_sort {
+    height: 15px;
 }
