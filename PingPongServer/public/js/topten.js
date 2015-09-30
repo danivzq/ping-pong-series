@@ -71,7 +71,7 @@ loadTopTenWins = function(agg, username) {
   for(var i=3; i<agg.buckets.length; i++){
     winstable +=
         "<tr class='" + (agg.buckets[i].key === username ? 'bold-red' : '') + "' " +
-        "style='background-color:#47BAE6;opacity:" + (1.2 - ((i+1)*5)/100)+ "'>" +
+        "style='background-color:#47BAE6;opacity:" + (1.2 - ((i+1)*7)/100)+ "'>" +
           "<td>" + (i+1) + "</td>" +
           "<td>" + agg.buckets[i].key + "</td>" +
           "<td>" + agg.buckets[i].doc_count + "</td>" +
