@@ -1,8 +1,4 @@
 FROM elasticsearch
-
-#################
-# Elasticsearch #
-#################
 # install plugins in elasticsearch
 RUN plugin -i mobz/elasticsearch-head
 
@@ -13,20 +9,22 @@ RUN apt-get update && apt-get install -y \
   nodejs \
   npm
 
+ENV appname ping-pong-server
+
 ##########
 #  App   #
 ##########
-ADD PingPongServer /opt/ping-pong-server/PingPongServer
-WORKDIR /opt/ping-pong-server/PingPongServer
+WORKDIR /opt/${appname}
+ADD PingPongServer .
 # install packages
 RUN npm install
 
 #############
 #  Scripts  #
 #############
-ADD scripts /opt/ping-pong-server/scripts
+ADD bin bin
 
 ##############
 # Entrypoint #
 ##############
-ENTRYPOINT ["/opt/ping-pong-server/scripts/entrypoint.sh"]
+ENTRYPOINT ["bin/entrypoint.sh"]
