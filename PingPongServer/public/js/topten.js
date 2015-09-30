@@ -1,13 +1,41 @@
-loadTopTen = function() {
+loadTopTen = function(matchType) {
   var jqxhr = $.get( "/stats/topten",
+    {
+      matchType: matchType
+    },
     function(data, status, request) {
       var username = request.getResponseHeader("username")
       $("div#main-content").html("")
       $("div#main-content").append("<h1>TOP TEN</h1>")
 
+      var matchTypeFilter =
+        "<div id='aggs' class='aggs'>" +
+          "<div class='agg'>" +
+            "<p>MATCH TYPE</p>" +
+            "<table>" +
+              "<tr>" +
+                "<td>" +
+                  "<select name='matchType'>" +
+                    "<option value='SINGLES'" + (matchType === "SINGLES" ? 'selected' : '') + ">SINGLES</option>" +
+                    "<option value='DOUBLES'" + (matchType === "DOUBLES" ? 'selected' : '') + ">DOUBLES</option>" +
+                  "</select>" +
+                "</td>" +
+              "</tr>" +
+            "</table>" +
+          "</div>" +
+        "</div>"
+      $("div#main-content").append(matchTypeFilter)
+      $("#aggs").find("select").change(
+        function(){
+          loadTopTen($("#aggs :input[name='matchType']").val())
+        }
+      );
+
       loadTopTenWins(data.aggregations.topwins, username)
       loadTopTenPoints(data.aggregations.toppoints, username)
       loadTopTenSets(data.aggregations.topsets, username)
+
+      $("div#main-content").append("<div><p id='result'></p></div>")
     })
     .fail(function(error) {
       $("#result").html(error.responseText);
@@ -18,17 +46,18 @@ loadTopTen = function() {
 /*WINS TABLE*/
 loadTopTenWins = function(agg, username) {
   var winstable =
-  "<div class='topten'>"
-  for(var i=0; i<2; i++){
+    "<div class='topten-block'>" +
+      "<div class='podium'>"
+  for(var i=0; i<=2; i++){
     winstable +=
-//        "<tr class='" + (agg.buckets[i].key === username ? 'bold-red' : '') + "' " +
-//        "style='background-color:#47BAE6;opacity:" + (1 - ((i+1)*5)/100)+ "'>" +
-//          "<td>" + (i+1) + "</td>" +
-//          "<td>" + agg.buckets[i].key + "</td>" +
-//          "<td>" + agg.buckets[i].doc_count + "</td>" +
-//        "</tr>"
+        "<div class='" + (agg.buckets[i].key === username ? 'bold-red' : '') + " medal" + (i+1) +"'>" +
+          "<p><b>" + agg.buckets[i].key + "</b></p>" +
+          "<p>" + agg.buckets[i].doc_count + " wins</p>" +
+        "</div>"
   }
   winstable +=
+  "</div>" +
+  "<div class='topten'>" +
     "<table id='winstable'>" +
       "<thead>" +
         "<tr>" +
@@ -42,7 +71,7 @@ loadTopTenWins = function(agg, username) {
   for(var i=3; i<agg.buckets.length; i++){
     winstable +=
         "<tr class='" + (agg.buckets[i].key === username ? 'bold-red' : '') + "' " +
-        "style='background-color:#47BAE6;opacity:" + (1 - ((i+1)*5)/100)+ "'>" +
+        "style='background-color:#47BAE6;opacity:" + (1.2 - ((i+1)*7)/100)+ "'>" +
           "<td>" + (i+1) + "</td>" +
           "<td>" + agg.buckets[i].key + "</td>" +
           "<td>" + agg.buckets[i].doc_count + "</td>" +
@@ -50,8 +79,8 @@ loadTopTenWins = function(agg, username) {
   }
   winstable +=
       "</tbody>" +
-    "</table>" +
-  "</div></br>"
+    "</table></div></div>"+
+    "<div id='toptenextra' class='topten-block'></div>"
   $("div#main-content").append(winstable)
 }
 
@@ -72,7 +101,7 @@ loadTopTenPoints = function(agg, username) {
   var pos = 1
   for(var bucket of agg.user.buckets){
     pointstable +=
-        "<tr class='" + (bucket.key === username ? 'bold-red' : 'stratio-color') + "' " +
+        "<tr class='" + (bucket.key === username ? 'bold-red' : 'color-white') + "' " +
         "style='background-color:#434343;opacity:" + (1 - (pos*5)/100)+ "'>" +
           "<td>" + pos + "</td>" +
           "<td>" + bucket.key + "</td>" +
@@ -84,7 +113,7 @@ loadTopTenPoints = function(agg, username) {
       "</tbody>" +
     "</table>" +
   "</div>"
-  $("div#main-content").append(pointstable)
+  $("div#toptenextra").append(pointstable)
 }
 
 /*SETS TABLE*/
@@ -104,7 +133,7 @@ loadTopTenSets = function(agg, username) {
   var pos = 1
   for(var bucket of agg.user.buckets){
     setstable +=
-        "<tr class='" + (bucket.key === username ? 'bold-red' : 'stratio-color') + "' " +
+        "<tr class='" + (bucket.key === username ? 'bold-red' : 'color-white') + "' " +
         "style='background-color:#434343;opacity:" + (1 - (pos*5)/100)+ "'>" +
           "<td>" + pos + "</td>" +
           "<td>" + bucket.key + "</td>" +
@@ -116,5 +145,5 @@ loadTopTenSets = function(agg, username) {
       "</tbody>" +
     "</table>" +
   "</div>"
-  $("div#main-content").append(setstable)
+  $("div#toptenextra").append(setstable)
 }

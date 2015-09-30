@@ -4,11 +4,18 @@
 #   
 #  Como parámetro se pasa el host y el puesto de la máquina de elasticsearch (p.e. 'localhost:9200')
 
-curl -XDELETE  "http://$1/ping-pong-series"
-echo 
-curl -XPOST  "http://$1/ping-pong-series" -d '{
+INDEX_URL="http://$1/ping-pong-series"
+
+echo "Check if index already exists..."
+http_status=`curl --write-out "%{http_code}\n" --silent --output /dev/null $INDEX_URL`
+if [ $http_status -eq 200 ];
+then
+	echo "Index already exists, nothing to do here."
+else
+	echo "Index not exists, let's create it!"
+curl -XPOST  "$INDEX_URL" -d '{
 	"settings" : {
-		"number_of_replicas" : 1,
+		"number_of_replicas" : 0,
 		"number_of_shards" : 1,
 		"analysis" : {
 			"analyzer" : {
@@ -41,12 +48,20 @@ curl -XPOST  "http://$1/ping-pong-series" -d '{
 					"type" : "string",
 					"analyzer" : "standard"
 				},
+				"winnerNotAnalyzed" : {
+					"type" : "string",
+					"index" : "not_analyzed"
+				},
 				"details" : {
 					"type" : "nested",
 					"properties" : {
 						"player" : {
 							"type" : "string",
 							"analyzer" : "standard"
+						},
+						"playerNotAnalyzed" : {
+							"type" : "string",
+							"index" : "not_analyzed"
 						},
 						"wonSets" : {
 							"type" : "integer"
@@ -96,3 +111,4 @@ curl -XPOST  "http://$1/ping-pong-series" -d '{
 	}
 }'
 echo
+fi

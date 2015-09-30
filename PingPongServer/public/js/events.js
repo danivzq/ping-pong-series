@@ -50,4 +50,5 @@ cleanSelectedNavigation = function() {
   $("#nav-home")[0].className = ""
   $("#nav-matches")[0].className = ""
   $("#nav-results")[0].className = ""
+  $("#nav-topten")[0].className = ""
 }

@@ -6,6 +6,7 @@ package com.stratio.model;
 public class Detail {
 
     private String player;
+    private String playerNotAnalyzed;
     private Integer wonSets;
     private Integer[] points;
     private Integer totalPoints;
@@ -16,6 +17,14 @@ public class Detail {
 
     public void setPlayer(String player) {
         this.player = player;
+    }
+
+    public String getPlayerNotAnalyzed() {
+        return playerNotAnalyzed;
+    }
+
+    public void setPlayerNotAnalyzed(String playerNotAnalyzed) {
+        this.playerNotAnalyzed = playerNotAnalyzed;
     }
 
     public Integer getWonSets() {
