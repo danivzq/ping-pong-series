@@ -66,6 +66,7 @@ public class GamesMain {
         game.setGameType(fieldValues[1]);
         game.setDate(fieldValues[2]);
         game.setWinner(fieldValues[3]);
+        game.setWinnerNotAnalyzed(fieldValues[3]);
         List<Detail> details = new ArrayList<Detail>();
         details.add(buildPlayerDetail(fieldValues[4], fieldValues[5], fieldValues[6]));
         details.add(buildPlayerDetail(fieldValues[7], fieldValues[8], fieldValues[9]));
@@ -77,6 +78,7 @@ public class GamesMain {
     private static Detail buildPlayerDetail(String player, String wonSets, String points) {
         Detail playerDetail = new Detail();
         playerDetail.setPlayer(player);
+        playerDetail.setPlayerNotAnalyzed(player);
         playerDetail.setWonSets(Integer.parseInt(wonSets));
         String[] splitPoints = StringUtils.split(points, ",");
         Integer[] intPoints = new Integer[splitPoints.length];

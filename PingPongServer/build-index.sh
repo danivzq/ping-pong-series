@@ -41,12 +41,20 @@ curl -XPOST  "http://$1/ping-pong-series" -d '{
 					"type" : "string",
 					"analyzer" : "standard"
 				},
+				"winnerNotAnalyzed" : {
+					"type" : "string",
+					"index" : "not_analyzed"
+				},
 				"details" : {
 					"type" : "nested",
 					"properties" : {
 						"player" : {
 							"type" : "string",
 							"analyzer" : "standard"
+						},
+						"playerNotAnalyzed" : {
+							"type" : "string",
+							"index" : "not_analyzed"
 						},
 						"wonSets" : {
 							"type" : "integer"

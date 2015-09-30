@@ -30,6 +30,7 @@ public class Game {
     private String gameType;
     private String date;
     private String winner;
+    private String winnerNotAnalyzed;
     private List<Detail> details;
     private StatusTypeEnum status;
 
@@ -63,6 +64,14 @@ public class Game {
 
     public void setWinner(String winner) {
         this.winner = winner;
+    }
+
+    public String getWinnerNotAnalyzed() {
+        return winnerNotAnalyzed;
+    }
+
+    public void setWinnerNotAnalyzed(String winnerNotAnalyzed) {
+        this.winnerNotAnalyzed = winnerNotAnalyzed;
     }
 
     public List<Detail> getDetails() {

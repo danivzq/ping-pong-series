@@ -5,7 +5,13 @@ var express = require('express'),
 var session = require('express-session');
 var app = express();
 
-app.use(session({secret: '193728465ALYBGJQP'}));
+app.use(session(
+  {
+    secret: '193728465ALYBGJQP',
+    resave: false,
+    saveUninitialized: false
+  }
+));
 
 require('./config/express')(app, config);
 

@@ -170,7 +170,12 @@ function deleteGame(id, cb) {
 }
 exports.deleteGame = deleteGame;
 
-function getTopTen(cb) {
+function getTopTen(matchType, cb) {
+  if(!matchType){
+    matchType = "SINGLES"
+  }
+  var winnerField = (matchType === "SINGLES" ? 'winner' : 'winnerNotAnalyzed')
+  var playerField = 'details.' + (matchType === "SINGLES" ? 'player' : 'playerNotAnalyzed')
   client.search({
     index: index,
     type: gameType,
@@ -178,6 +183,11 @@ function getTopTen(cb) {
       size: 0,
       query: {
         bool: {
+          must: {
+            term: {
+              'matchType': matchType
+            }
+          },
           must_not: {
             term: {
               'gameType': 'training'
@@ -188,7 +198,29 @@ function getTopTen(cb) {
       aggs: {
         'topwins': {
           terms: {
-            field: 'winner'
+            field: winnerField,
+            order: [
+              {
+                '_count': 'desc'
+              },
+              {
+                'points>p': 'desc'
+              }
+            ]
+          },
+          aggs: {
+            'points': {
+              nested: {
+                path: 'details'
+              },
+              aggs: {
+                'p': {
+                  sum: {
+                    field: 'details.totalPoints'
+                  }
+                }
+              }
+            }
           }
         },
         'toppoints': {
@@ -198,7 +230,7 @@ function getTopTen(cb) {
           aggs: {
             'user': {
               terms: {
-                field: 'details.player',
+                field: playerField,
                 order: {
                   'points': 'desc'
                 }
@@ -220,7 +252,7 @@ function getTopTen(cb) {
           aggs: {
             'user': {
               terms: {
-                field: 'details.player',
+                field: playerField,
                 order: {
                   'sets': 'desc'
                 }

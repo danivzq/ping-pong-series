@@ -14,6 +14,8 @@ loadMatches = function(from, size, msgOK) {
       if(data.hits.total > 20){
         loadMatchesPagination(data.hits.total, from)
       }
+
+      $("div#main-content").append("<div><p id='result'></p></div>")
       if(msgOK){
         $("#result").html(msgOK)
         $("#result")[0].style.color = "#080"
@@ -46,9 +48,9 @@ loadMatchesTable = function(hits, username) {
     matchestable +=
         "<tr id=" + hit._id + ">" +
           "<td>" +
-            "<select name='matchType' value='" + hit._source.matchType + "'" +(hit._source.pendingBy!==username?'disabled':'')+ ">" +
-              "<option value='SINGLES'>SINGLES</option>" +
-              "<option value='DOUBLES'>DOUBLES</option>" +
+            "<select name='matchType' " +(hit._source.pendingBy!==username?'disabled':'')+ ">" +
+              "<option value='SINGLES' " + (hit._source.matchType === "SINGLES" ? 'selected' : '') + ">SINGLES</option>" +
+              "<option value='DOUBLES' " + (hit._source.matchType === "DOUBLES" ? 'selected' : '') + ">DOUBLES</option>" +
             "</select>" +
           "</td>" +
           "<td>"+hit._source.gameType+"</td>" +
@@ -104,8 +106,7 @@ loadMatchesTable = function(hits, username) {
         "</tr>"
       "</tbody></table>"
   var $smartpaginator = $("<div id='smart-paginator'>")
-  var $result = $("<div id='result'/>" )
-  $('div#matches').append($total, matchestable, $smartpaginator, $result)
+  $('div#matches').append($total, matchestable, $smartpaginator)
 }
 
 addMatch = function() {

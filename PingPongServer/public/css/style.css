@@ -79,6 +79,10 @@ input.checkbox, label.checkbox:hover{
     background-color:#000;
 }
 
+.color-white {
+    color:#FFF;
+}
+
 .error {
     color: #F00;
     margin: 0;
@@ -288,8 +292,7 @@ td p.error {
 
 .topten {
     display:inline-table;
-    vertical-align: top;
-    min-width: 20%;
+    min-width: 30%;
     margin-left: 40px;
     margin-top: 20px;
 }
@@ -364,4 +367,48 @@ td p.error {
 
 #date_desc_sort, #date_asc_sort {
     height: 15px;
+}
+
+.topten-block {
+    text-align: center;
+}
+
+.podium {
+    background-image: url("/img/podium.gif");
+    width: 460px;
+    height: 360px;
+    display: inline-table;
+}
+
+.medal1 {
+    background-position: 0 0;
+    left: 156px;
+    top: -29px;
+}
+
+.medal2 {
+    background-position: 310px 0;
+    left: 24px;
+    top: -104px;
+}
+
+.medal3 {
+    background-position: 147px 0;
+    left: 288px;
+    top: -269px;
+}
+
+.medal1, .medal2, .medal3 {
+    background-image: url("/img/medals.png");
+    text-transform: uppercase;
+    height: 150px;
+    width: 146px;
+    position: relative;
+}
+
+.medal1 p, .medal2 p, .medal3 p {
+    text-align: center;
+    position: relative;
+    top: 45px;
+    padding: 0px 20px;
 }

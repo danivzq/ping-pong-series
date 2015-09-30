@@ -8,14 +8,16 @@ module.exports = function (app) {
 
 router.get('/stats/topten', function (req, res, next) {
   var username = req.session.username
+  var matchType = req.query.matchType
   if(username){
-    esGameService.getTopTen(
+    esGameService.getTopTen(matchType,
       function (error, data) {
         if(error){
           console.log(error);
           res.send(error);
         }else{
           res.set("username", username);
+          res.set("matchType", matchType);
           res.send(data);
         }
       }

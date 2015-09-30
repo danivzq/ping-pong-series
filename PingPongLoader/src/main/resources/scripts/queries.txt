@@ -116,12 +116,17 @@
   }
 }
 
-//TOP TEN TRAINING
+//TOP TEN SINGLES OFFICIAL
 {
   "size": 0,
   "query": {
     "bool": {
       "must": {
+        "term": {
+          "matchType": "SINGLES"
+        }
+      },
+      "must_not": {
         "term": {
           "gameType": "training"
         }
@@ -131,7 +136,29 @@
   "aggs": {
     "topwins": {
       "terms": {
-        "field": "winner"
+        "field": "winner",
+        "order": [
+          {
+            "_count": "desc"
+          },
+          {
+            "points>p": "desc"
+          }
+        ]
+      },
+      "aggs": {
+        "points": {
+          "nested": {
+             "path": "details"
+          },
+          "aggs": {
+            "p": {
+              "sum": {
+                "field": "details.totalPoints"
+              }
+            }
+          }
+        }
       }
     },
     "toppoints": {
@@ -164,6 +191,98 @@
         "user": {
           "terms": {
             "field": "details.player",
+            "order": {
+              "sets": "desc"
+            }
+          },
+          "aggregations": {
+            "sets": {
+              "sum": {
+                "field": "details.wonSets"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+//TOP TEN DOUBLES OFFICIAL
+{
+  "size": 0,
+  "query": {
+    "bool": {
+      "must": {
+        "term": {
+          "matchType": "DOUBLES"
+        }
+      },
+      "must_not": {
+        "term": {
+          "gameType": "training"
+        }
+      }
+    }
+  },
+  "aggs": {
+    "topwins": {
+      "terms": {
+        "field": "winnerNotAnalyzed",
+        "order": [
+          {
+            "_count": "desc"
+          },
+          {
+            "points>p": "desc"
+          }
+        ]
+      },
+      "aggs": {
+        "points": {
+          "nested": {
+             "path": "details"
+          },
+          "aggs": {
+            "p": {
+              "sum": {
+                "field": "details.totalPoints"
+              }
+            }
+          }
+        }
+      }
+    },
+    "toppoints": {
+      "nested": {
+        "path": "details"
+      },
+      "aggregations": {
+        "user": {
+          "terms": {
+            "field": "details.playerNotAnalyzed",
+            "order": {
+              "points": "desc"
+            }
+          },
+          "aggregations": {
+            "points": {
+              "sum": {
+                "field": "details.totalPoints"
+              }
+            }
+          }
+        }
+      }
+    },
+    "topsets": {
+      "nested": {
+        "path": "details"
+      },
+      "aggregations": {
+        "user": {
+          "terms": {
+            "field": "details.playerNotAnalyzed",
             "order": {
               "sets": "desc"
             }
