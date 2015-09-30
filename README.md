@@ -1,9 +1,9 @@
 # Ping-Pong Series
-## Build Docker Image: 
+## Build Docker image: 
 ```sudo docker build -t ping-pong-server .```
-## Run Docker Image: 
+## Run Docker container: 
 ```sudo docker run -d --name ping01 ping-pong-server```
-## Stop Docker Image: 
+## Stop Docker container: 
 ```sudo docker stop ping01```
 ## Get the container shell
 ```sudo docker exec -t -i ping01 /bin/bash```
