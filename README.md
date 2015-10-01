@@ -5,7 +5,9 @@
 ```sudo docker build -t ping-pong-server .```
 ## Run Docker container: 
 Daemon: ```sudo docker run -d --name ping01 ping-pong-server```
+
 Foreground: ```sudo docker run --name ping01 ping-pong-server```
+
 Host: ```sudo docker run --net="host" --name ping01 ping-pong-server```
 ## Stop Docker container: 
 ```sudo docker stop ping01```
