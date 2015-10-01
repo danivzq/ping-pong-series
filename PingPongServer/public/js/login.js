@@ -1,8 +1,8 @@
 logIn = function() {
   var jqxhr = $.get( "/login",
     {
-      username:$("#login-form :input[name='username']").val(),
-      password:$("#login-form :input[name='password']").val()
+      username: $("#login-form :input[name='username']").val(),
+      password: CryptoJS.MD5($("#login-form :input[name='password']").val()).toString()
     })
     .done(function(data) {
       $(location).attr('href', '/')
@@ -44,7 +44,7 @@ signUp = function() {
       {
         email: email,
         fullname: fullname,
-        password: password
+        password: CryptoJS.MD5(password).toString()
       })
       .done(function(data) {
         if(data.status === "400"){

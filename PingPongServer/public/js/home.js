@@ -12,7 +12,7 @@ checkOldPassword = function() {
 
     $("#oldpassword-error").html("")
     oldpass.style.borderColor = ""
-    if(pass.value !== oldpass.value){
+    if(pass.value !== CryptoJS.MD5(oldpass.value).toString()){
         $("#oldpassword-error").html("Wrong password")
         oldpass.style.borderColor = "#f00"
     }
@@ -22,7 +22,7 @@ applyChanges = function() {
   var email = $("#home-form :input[name='email']").val()
   var fullname = $("#home-form :input[name='fullname']").val()
   var password = $("#home-form :input[name='password']").val()
-  var oldpassword = $("#home-form :input[name='oldpassword']").val()
+  var oldpassword = CryptoJS.MD5($("#home-form :input[name='oldpassword']").val()).toString()
   var newpassword = $("#home-form :input[name='newpassword']").val()
   var newpassword2 = $("#home-form :input[name='newpassword2']").val()
 
@@ -38,7 +38,7 @@ applyChanges = function() {
   }else {
     var pass
     if($("#pass-change")[0].checked){
-      pass = $("#home-form :input[name='newpassword']").val()
+      pass = CryptoJS.MD5($("#home-form :input[name='newpassword']").val()).toString()
     }else{
       pass = $("#home-form :input[name='password']").val()
     }
