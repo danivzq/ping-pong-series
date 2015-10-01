@@ -1,0 +1,17 @@
+//DOC:
+//https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-snapshots.html#_shared_file_system_repository
+
+//CREATE FS REPOSITORY
+curl -XPUT 'http://localhost:9200/_snapshot/ping-pong-backup?pretty' -d '{"type": "fs", "settings": {"location": "/tmp/elasticsearch/backups/ping-pong-backup", "compress": true} }' && echo
+
+//SNAPSHOT ALL OPEN INDICES
+curl -XPUT 'http://localhost:9200/_snapshot/ping-pong-backup/snapshot_1?wait_for_completion=true&pretty' && echo
+
+//GET SNAPSHOT INFO
+curl -XGET 'http://localhost:9200/_snapshot/ping-pong-backup/snapshot_1?pretty' && echo
+
+//RESTORE SNAPSHOT (close index before restore)
+curl -XPOST 'http://localhost:9200/_snapshot/ping-pong-backup/snapshot_1/_restore?pretty' && echo
+
+//GET SNAPSHOT/RESTORE STATUS
+curl -XGET 'http://localhost:9200/_snapshot/ping-pong-backup/snapshot_1/_status?pretty' && echo

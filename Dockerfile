@@ -7,7 +7,12 @@ RUN plugin -i mobz/elasticsearch-head
 #############################
 RUN apt-get update && apt-get install -y \
   nodejs \
-  npm
+  npm \
+  vim \
+  vim-common \
+  vim-gnome \
+  vim-gui-common \
+  vim-runtime 
 
 ENV appname ping-pong-server
 
@@ -23,6 +28,11 @@ RUN npm install
 #  Scripts  #
 #############
 ADD bin bin
+
+#############
+# Resources #
+#############
+ADD resources/elasticsearch.yml /usr/share/elasticsearch/config/elasticsearch.yml
 
 ##############
 # Entrypoint #

@@ -19,7 +19,7 @@ import com.stratio.model.User;
  */
 public class Indexer {
 
-    private static final String CLUSTER_NAME = "division-empresas";
+    private static final String CLUSTER_NAME = "stratio-ping-pong";
     private static final String INDEX_NAME = "ping-pong-series";
 
     private static ObjectMapper mapper = new ObjectMapper();
