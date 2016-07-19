@@ -1,6 +1,5 @@
 package com.stratio.model;
 
-import java.util.Date;
 import java.util.List;
 
 /**

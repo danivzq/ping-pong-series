@@ -1,26 +1,13 @@
 package com.stratio.main;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.stratio.model.User;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.elasticsearch.action.bulk.BulkRequestBuilder;
-import org.elasticsearch.action.bulk.BulkResponse;
-import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.ImmutableSettings;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.stratio.model.Detail;
-import com.stratio.model.Game;
-import com.stratio.model.Game.MatchTypeEnum;
-import com.stratio.model.User;
 
 /**
  * Created by Stratio on 27/08/15.

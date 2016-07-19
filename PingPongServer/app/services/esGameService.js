@@ -202,9 +202,6 @@ function getTopTen(matchType, cb) {
             order: [
               {
                 '_count': 'desc'
-              },
-              {
-                'points>p': 'desc'
               }
             ]
           },

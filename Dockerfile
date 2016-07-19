@@ -1,11 +1,12 @@
-FROM elasticsearch
+FROM elasticsearch:2.1
 # install plugins in elasticsearch
-RUN plugin -i mobz/elasticsearch-head
+RUN ./bin/plugin install lmenezes/elasticsearch-kopf/v2.1.1
 
 #############################
 # NPM and Node installation #
 #############################
-RUN apt-get update && apt-get install -y \
+RUN apt-get update 
+RUN apt-get install -y \
   nodejs \
   npm \
   vim \
@@ -37,4 +38,5 @@ ADD resources/elasticsearch.yml /usr/share/elasticsearch/config/elasticsearch.ym
 ##############
 # Entrypoint #
 ##############
+USER elasticsearch
 ENTRYPOINT ["bin/entrypoint.sh"]

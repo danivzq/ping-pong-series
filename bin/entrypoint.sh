@@ -1,6 +1,7 @@
 #!/bin/sh
 echo "Start elasticsearch..."
-elasticsearch &
+
+elasticsearch -Des.network.host=0.0.0.0 &
 #sleeping 10 seconds to allow elasticsearch to start
 sleep 10
 
